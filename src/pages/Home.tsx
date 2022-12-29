@@ -3,6 +3,7 @@ import cardSchedule from '../images/cardSchedule.jpg';
 import cardLearnMore from '../images/cardLearnMore.jpg';
 import {TbHomeOff, TbTrash, TbTruckDelivery} from 'react-icons/tb';
 import Card from '../components/card';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
     return ( 
@@ -12,7 +13,10 @@ const Home = () => {
                     <h1 className='mb-5'>Don't know what to do with your appliances?</h1>
                     <h4 className='mb-5'>Contact RLD Disposal today for quality appliance delivery, installation, removal and more from technicians who care.</h4>
                     <div className='my-5'>
-                        <button className='btn-primary'><h5>Make an appointment</h5></button>
+                        <Link to='/schedule'>
+                            <button className='btn-primary'><h5>Make an appointment</h5></button>
+                        </Link>
+                        
                         <button className='btn-secondary'><h5>Learn More</h5></button>
                     </div>
                     
@@ -41,7 +45,7 @@ const Home = () => {
 
                 </div>
             </div>
-            <div className='px-24 my-24 full-screen-div flex items-center flex-col'>
+            <div className='px-24 my-24 flex items-center flex-col'>
                 <h2 className='my-36'>Serving the greater St. Louis area since 1953.</h2>
                 <div className='flex flex-wrap justify-around w-full'>
                     <Card 
