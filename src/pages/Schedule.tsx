@@ -1,39 +1,37 @@
+import SelectService from "../components/SelectService";
+import SelectAppliance from "../components/SelectAppliance";
+import SelectLocation from "../components/SelectLocation";
+import { useState } from "react";
+
 const Schedule = () => {
+    const [questionScreen, setQuestionScreen] = useState(0);
+    const [ serviceVerb, setServiceVerb ] = useState("working with");
+    console.log(questionScreen)
+    const questionnaire = [
+        <SelectService 
+            setQuestionScreen={setQuestionScreen} 
+            questionScreen={questionScreen}
+            setServiceVerb={setServiceVerb}
+        />, 
+        <SelectAppliance 
+            serviceVerb={serviceVerb}
+            setQuestionScreen={setQuestionScreen} 
+            questionScreen={questionScreen}    
+        />, 
+            <SelectLocation 
+            serviceVerb={serviceVerb}
+            setQuestionScreen={setQuestionScreen} 
+            questionScreen={questionScreen}   
+        />
+    ];
+
     return ( 
         <>
-            <div className="flex flex-col px-24 full-screen-div items-center justify-center">
-                <div className="text-center mb-8">
-                    <h3 className='mb-5'>What would you like to schedule?</h3>
-                    <h4 className='mb-5'>Choose one option (you can add more later).</h4>
-                </div>
 
-                    <div className='flex flex-wrap w-1/2 justify-center'>
-                        <button className='btn-secondary my-3'>
-                            <h5>Pick up</h5>
-                            <p>Haul away an old appliance.</p>
-                        </button>
-                        <button className='btn-secondary my-3'>
-                            <h5>Deliver</h5>
-                            <p>From retailer or other location.</p>
-                        </button>
-                        <button className='btn-secondary my-3'>
-                            <h5>Install</h5>
-                            <p>Installation of any major appliance.</p>
-                        </button>
-                        <button className='btn-secondary my-3'>
-                            <h5>Move</h5>
-                            <p>Appliance or furniture within <br/> residence or to new residence.</p>
-                        </button>
-                        <button className='btn-secondary my-3'>
-                            <h5>Other</h5>
-                            <p>Submit unlisted or additional requests.</p>
-                        </button>
-                    </div>
+                {questionnaire[questionScreen]}
+      
+            
 
-             
-                    
-
-            </div>
         </>
      );
 }
