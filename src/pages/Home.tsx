@@ -8,10 +8,10 @@ import {Link} from 'react-router-dom';
 const Home = () => {
     return ( 
         <>
-            <div className="flex px-24 my-24 full-screen-div items-center justify-between">
+            <div className="flex px-24 my-16 full-screen-div items-center justify-between">
                 <div className="flex-initial w-6/12">
-                    <h1 className='mb-5'>Don't know what to do with your appliances?</h1>
-                    <h4 className='mb-5'>Contact RLD Disposal today for quality appliance delivery, installation, removal and more from technicians who care.</h4>
+                    <h1 className='mb-8'>Don't know what to do with your appliances?</h1>
+                    <h4 className='mb-8'>Contact RLD Disposal today for quality appliance delivery, installation, removal and more from technicians who care.</h4>
                     <div className='my-5'>
                         <Link to='/schedule'>
                             <button className='btn-primary'><h5>Make an appointment</h5></button>
