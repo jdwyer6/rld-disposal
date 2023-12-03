@@ -20,7 +20,7 @@ const SelectService = ({setQuestionScreen, questionScreen, setServiceVerb}: Priv
                         <h3>What would you like to schedule?</h3>
                         <h4>Choose one option (you can add more later).</h4>
                     </div>
-                    <div className='flex flex-wrap w-1/2 justify-center'>
+                    <div className='flex flex-wrap w-3/4 justify-center'>
                         <button onClick={()=>makeSelection("picking up")} className='btn-secondary my-3'>
                             <h5>Pick up</h5>
                             <p>Haul away an old appliance.</p>
@@ -35,11 +35,7 @@ const SelectService = ({setQuestionScreen, questionScreen, setServiceVerb}: Priv
                         </button>
                         <button onClick={()=>makeSelection("moving")} className='btn-secondary my-3'>
                             <h5>Move</h5>
-                            <p>Appliance or furniture within <br/> residence or to new residence.</p>
-                        </button>
-                        <button className='btn-secondary my-3'>
-                            <h5>Other</h5>
-                            <p>Submit unlisted or additional requests.</p>
+                            <p>Appliance to new residence.</p>
                         </button>
                     </div>
                 </div>

@@ -20,7 +20,7 @@ const SelectAppliance = ({serviceVerb, setQuestionScreen, questionScreen}: Priva
                             <h3>What are we {serviceVerb}?</h3>
                             <h4>Choose one option (you can add more later).</h4>
                         </div>
-                        <div className='flex flex-wrap w-1/2 justify-center'>
+                        <div className='flex flex-wrap w-full justify-center'>
 
                             <button className='btn-secondary my-3' onClick={()=>makeSelection()}>
                                 <h5>Refrigerator</h5>

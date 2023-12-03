@@ -1,7 +1,18 @@
 import logo from '../images/logo-white.png';
 import {Link} from 'react-router-dom';
+import LoginModal from './login_Modal';
+import React, { useState } from 'react';
 
 const Navbar = () => {
+    const [showModal, setShowModal] = useState(false);
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
     return ( 
         <nav className="flex items-center justify-between flex-wrap bg-teal-600 py-4 px-24">
             <Link to='/' className="flex items-center flex-shrink-0 text-white mr-6">
@@ -26,8 +37,9 @@ const Navbar = () => {
                 </a>
                 </div>
                 <div>
-                <a href="#" className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+                <a href="#" onClick={openModal} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
                 </div>
+                {showModal && <LoginModal onClose={closeModal} />}
             </div>
             </nav>
     );

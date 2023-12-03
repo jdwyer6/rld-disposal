@@ -67,3 +67,7 @@ p{
     height: 5px;
     width: 100%;
 }
+
+.rld-margin-bottom-sm {
+    margin-bottom: 1.5rem;
+}
