@@ -6,9 +6,12 @@ type PrivateProps = {
     serviceVerb: string
     setQuestionScreen: any
     questionScreen: number
+    setCurrentJobInfo: Function
+    currentJobInfo: any
+    jobNumber: number
 }
 
-const SelectTime = ({setQuestionScreen, questionScreen, serviceVerb}: PrivateProps) => {
+const SelectTime = ({setQuestionScreen, questionScreen, serviceVerb, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
     const [timeAndDay, setTimeAndDay] = useState();
     const makeSelection = (verb: string) =>{
         setQuestionScreen(questionScreen+=1)

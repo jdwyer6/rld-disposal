@@ -6,9 +6,12 @@ type PrivateProps = {
     serviceVerb: string;
     setQuestionScreen: any
     questionScreen: number
+    setCurrentJobInfo: Function
+    currentJobInfo: any
+    jobNumber: number
 }
 
-const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen}: PrivateProps) => {
+const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
     const makeSelection = () =>{
         setQuestionScreen(questionScreen+=1)
     }

@@ -9,27 +9,60 @@ import ProgressBar from "../components/ProgressBar";
 const Schedule = () => {
     const [questionScreen, setQuestionScreen] = useState(0);
     const [ serviceVerb, setServiceVerb ] = useState("working with");
-    console.log(questionScreen)
+    const [ jobNumber, setJobNumber ] = useState(0);
+    const [ currentJobInfo, setCurrentJobInfo ] = useState({
+        services: [],
+        appliances: [],
+        address: "",
+        location_to: "",
+        location_from: "",
+        date: "",
+        time: "",
+        customerName: "",
+        customerPhone: "",
+        customerEmail: "",
+        price: 0,
+        paymentCollected: false,
+        orderStatus: "pending",
+        customerNotes: "",
+        businessNotes: "",
+    });
+
     const questionnaire = [
         <SelectService 
             setQuestionScreen={setQuestionScreen} 
             questionScreen={questionScreen}
             setServiceVerb={setServiceVerb}
+            setCurrentJobInfo={setCurrentJobInfo}
+            currentJobInfo={currentJobInfo}
+            jobNumber={jobNumber}
         />, 
         <SelectAppliance 
             serviceVerb={serviceVerb}
             setQuestionScreen={setQuestionScreen} 
             questionScreen={questionScreen}    
+            setCurrentJobInfo={setCurrentJobInfo}
+            currentJobInfo={currentJobInfo}
+            jobNumber={jobNumber}
+
         />, 
         <SelectLocation 
             serviceVerb={serviceVerb}
             setQuestionScreen={setQuestionScreen} 
             questionScreen={questionScreen}   
+            setCurrentJobInfo={setCurrentJobInfo}
+            currentJobInfo={currentJobInfo}
+            jobNumber={jobNumber}
+
         />,
         <SelectTime 
             serviceVerb={serviceVerb}
             setQuestionScreen={setQuestionScreen} 
             questionScreen={questionScreen}   
+            setCurrentJobInfo={setCurrentJobInfo}
+            currentJobInfo={currentJobInfo}
+            jobNumber={jobNumber}
+
         />
     ];
 
