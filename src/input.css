@@ -45,6 +45,13 @@ p{
     font-weight: 400;
 }
 
+a {
+    &:hover{
+        cursor: pointer;
+        color:#0D9488;
+    }
+}
+
 .btn-primary{
     @apply bg-teal-600 py-5 px-10 rounded-full text-white hover:bg-teal-800 transition ease-in-out duration-300;
 }
@@ -70,4 +77,12 @@ p{
 
 .rld-margin-bottom-sm {
     margin-bottom: 1.5rem;
+}
+
+.container-main {
+    padding: 40px;
+}
+
+.text-primary {
+    color: #0D9488;
 }
