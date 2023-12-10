@@ -27,13 +27,13 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
   return (
     <div className="modal absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-12 shadow-xl z-10">
       <div className="modal-content">
-        <h2 className="rld-margin-bottom-sm text-center">Login</h2>
+        <h2 className="mb-sm text-center">Login</h2>
         <form onSubmit={handleSubmit}>
-            <div className='rld-margin-bottom-sm'>
+            <div className='mb-sm'>
                 <label className="mr-2">Username:</label>
                 <input type="text" className="border" value={username} onChange={handleUsernameChange} />
             </div>
-            <div className='rld-margin-bottom-sm'>
+            <div className='mb-sm'>
                 <label className="mr-2">Password:</label>     
                     <input type="password" className="border" value={password} onChange={handlePasswordChange} />
             </div>

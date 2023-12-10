@@ -4,6 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .primary {
+        @apply bg-teal-600;
+    }
+}
+
+:root {
+    --primary-color: #0D9488;
+    --primary-hover: #115E59;
+    --gray: #1F2937;
+}
+
 *{
     /* outline: 3px solid limegreen !important; */
     box-sizing: border-box;
@@ -75,14 +87,74 @@ a {
     width: 100%;
 }
 
-.rld-margin-bottom-sm {
+.mb-sm {
     margin-bottom: 1.5rem;
 }
 
 .container-main {
-    padding: 40px;
+    padding: 3rem;
 }
 
+/* Colors */
 .text-primary {
     color: #0D9488;
+}
+
+.search-bar {
+    width: 100%;
+    border-radius: 50px;
+    padding: 1rem;
+}
+
+.pill {
+    border-radius: 50px;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    width: 200px;
+    text-align: center;
+    
+    &:not(:first-child){
+        margin-left: 1rem;
+    }
+}
+
+.hover-primary:hover {
+    cursor: pointer;
+    background-color: #115E59;
+}
+
+.hover-secondary:hover {
+    cursor: pointer;
+    background-color: var(--gray);
+    color: white;
+}
+
+.order-card {
+    border: 1px solid #ccc;
+    border-radius: 24px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border-left: 24px solid #DA1212;
+
+    p {
+        margin: 4px 0;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(243, 243, 243);
+    }
+}
+
+.color-status-pending {color: #DA1212;}
+.color-status-accepted {color: var(--primary-color);}
+.color-status-delivered {color: #12cdda;}
+.color-status-complete {color: #115E59;}
+
+.brand-text {
+
+    &:hover {
+        color: var(--gray);
+    }
+    
 }

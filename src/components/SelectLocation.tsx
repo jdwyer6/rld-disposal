@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { getPositionOfLineAndCharacter } from "typescript";
 import { motion, AnimatePresence } from "framer-motion";
+import prices from '../data/prices';
+
 
 type PrivateProps = {
     serviceVerb: string;
@@ -43,11 +45,11 @@ const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen, setCurr
                                 <label className="block text-gray-700 text-sm font-bold" htmlFor="address">Location</label>
                                 <button className="inline-flex w-full rounded border border-gray-7000 text-start bg-white px-4 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-gray-100" aria-expanded="true" aria-haspopup="true" onClick={()=>setDropDownOpen(!dropDownOpen)}>{location}</button>
                                 <div className={`flex flex-col rounded border border-gray-700 bg-white px-4 py-2 shadow-sm ${dropDownOpen === true ? "block" : "hidden"}`}>
-                                    <a className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={()=>selectOption("Inside house - needs to be disconnected", false)}>$42 Inside house (needs to be disconnected)</a>
-                                    <a className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={()=>selectOption("Inside house - already disconnected", false)}>$39 Inside house (already disconnected)</a>
-                                    <a className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={()=>selectOption("Garage", false)}>$29 Garage</a>
-                                    <a className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={()=>selectOption("Driveway/Curb", false)}>$29 Driveway or Curb</a>
-                                    <a className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={()=>selectOption("Other", true)}>Other</a>
+                                    {Object.values(prices).map((item) => (
+                                        <a key={item.name} className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={() => selectOption(item.description, false)}>
+                                            ${item.price} {item.description}
+                                        </a>
+                                    ))}
                                 </div>
                             </div>
                             {other === true ? (

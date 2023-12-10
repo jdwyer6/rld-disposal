@@ -17,7 +17,7 @@ const Navbar = () => {
         <nav className="flex items-center justify-between flex-wrap bg-teal-600 py-4 px-24">
             <Link to='/' className="flex items-center flex-shrink-0 text-white mr-6">
                 <img src={logo} width='24' className='mr-3'/>
-                <span className="font-semibold text-xl tracking-tight">RLD Disposal</span>
+                <span className="font-semibold text-xl tracking-tight brand-text">RLD Disposal</span>
             </Link>
             <div className="block lg:hidden">
                 <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
@@ -26,13 +26,13 @@ const Navbar = () => {
             </div>
             <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
                 <div className="text-sm lg:flex-grow">
-                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                     Home
                 </a>
-                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
                     About
                 </a>
-                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+                <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">
                     Schedule service
                 </a>
                 </div>
