@@ -6,6 +6,7 @@ import Card from '../components/card';
 import {Link} from 'react-router-dom';
 
 const Home = () => {
+    //test
     return ( 
         <>
             <div className="flex px-24 my-16 full-screen-div items-center justify-between">
