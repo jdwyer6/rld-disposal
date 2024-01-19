@@ -29,46 +29,14 @@ const Schedule = () => {
         last_name: "",
         confirmed_delivery_date: "",
         payment_collected: false,
-        orderStatus: 0
+        orderStatus: 0,
+        number_of_services: 1
     });
 
-    // const questionnaire = [
-    //     <SelectService 
-    //         setQuestionScreen={setQuestionScreen} 
-    //         questionScreen={questionScreen}
-    //         setServiceVerb={setServiceVerb}
-    //         setCurrentJobInfo={setCurrentJobInfo}
-    //         currentJobInfo={currentJobInfo}
-    //         jobNumber={jobNumber}
-    //     />, 
-    //     <SelectAppliance 
-    //         serviceVerb={serviceVerb}
-    //         setQuestionScreen={setQuestionScreen} 
-    //         questionScreen={questionScreen}    
-    //         setCurrentJobInfo={setCurrentJobInfo}
-    //         currentJobInfo={currentJobInfo}
-    //         jobNumber={jobNumber}
+    const serviceComponents = Array.from({ length: jobInfo.number_of_services }, (_, index) => (
+        <Service key={index} index={index} jobInfo={jobInfo} setJobInfo={setJobInfo}/>
+    ));
 
-    //     />, 
-    //     <SelectLocation 
-    //         serviceVerb={serviceVerb}
-    //         setQuestionScreen={setQuestionScreen} 
-    //         questionScreen={questionScreen}   
-    //         setCurrentJobInfo={setCurrentJobInfo}
-    //         currentJobInfo={currentJobInfo}
-    //         jobNumber={jobNumber}
-
-    //     />,
-    //     <SelectTime 
-    //         serviceVerb={serviceVerb}
-    //         setQuestionScreen={setQuestionScreen} 
-    //         questionScreen={questionScreen}   
-    //         setCurrentJobInfo={setCurrentJobInfo}
-    //         currentJobInfo={currentJobInfo}
-    //         jobNumber={jobNumber}
-
-    //     />
-    // ];
 
     return ( 
         <div>
@@ -79,8 +47,8 @@ const Schedule = () => {
                 /> */}
             </div>
             <h1>Services</h1>
-            <div>
-                <Service jobInfo={jobInfo} setJobInfo={setJobInfo}/>
+            <div className="service-components">
+                {serviceComponents}
             </div>
             <h1>Scheduling</h1>
  

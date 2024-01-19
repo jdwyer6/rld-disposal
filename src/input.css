@@ -352,45 +352,6 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
-/* h1{
-    font-size: 96px;
-    font-weight: 600;
-    line-height: 6.5rem;
-}
-
-h2{
-    font-size: 72px;
-    font-weight: 600;
-}
-
-h3{
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 2.5rem;
-}
-
-h4{
-    font-size: 24px;
-    font-weight: 400;
-}
-
-h5{
-    font-size: 24px;
-    font-weight: 600;
-}
-
-p{
-    font-size: 16px;
-    font-weight: 400;
-}
-
-a {
-    &:hover{
-        cursor: pointer;
-        color:#0D9488;
-    }
-} */
-
 section {
     border: 1px solid var(--form-element-border-color);
     padding: 64px;
@@ -416,7 +377,7 @@ section {
     &:hover {
         cursor: pointer;
         button {
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: white;
         }
     }
@@ -425,6 +386,9 @@ section {
         button {
             background-color: var(--primary);
             color: white;
+            path {
+                fill: white;
+            }
         }
     }
 }
@@ -440,6 +404,14 @@ section {
     &:hover {
         background-color: var(--primary);
         color: white;
+    }
+
+    &.selected {
+        background-color: var(--primary);
+        color: white;
+        path {
+            fill: white;
+        }
     }
 
 }
@@ -480,9 +452,28 @@ section {
     display: none;
 }
 
+.service-components {
+    .add-another-service-btn::not(:last-of-type) {
+        display: none;
+    }
+}
 
+.close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    transform: translate(50%, -50%);
+    color: var(--h2-color);
 
+    &:hover {
+        color: var(--h1-color);
+    }
+}
 
+.container {
+    position: relative;
+}
 
 
 
