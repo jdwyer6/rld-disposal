@@ -127,7 +127,7 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                                 </button>
                             </div>
                         ))}
-                        </div>
+                    </div>
                     
                     <AnimatePresence>
                         {isRemove && (

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { MotionConfig } from "framer-motion";
 import ProgressBar from "../components/ProgressBar";
 import Service from "../components/Service";
+import Scheduling from "../components/Scheduling";
+import Notes from "../components/Notes";
 
 const Schedule = () => {
     const [questionScreen, setQuestionScreen] = useState(0);
@@ -40,17 +42,19 @@ const Schedule = () => {
 
     return ( 
         <div>
-            <div className="w-full flex justify-center my-16">
-                {/* <ProgressBar 
-                    questionScreen={questionScreen}  
-                    setQuestionScreen={setQuestionScreen}  
-                /> */}
-            </div>
-            <h1>Services</h1>
+            <h1 className="text-center">Services</h1>
             <div className="service-components">
                 {serviceComponents}
             </div>
-            <h1>Scheduling</h1>
+            <h1 className="text-center">Scheduling</h1>
+            <div className="schedule">
+                <Scheduling />
+            </div>
+            <h1 className="text-center">Notes</h1>
+            <div className="notes">
+                <Notes />
+            </div>
+            
  
             
         </div>

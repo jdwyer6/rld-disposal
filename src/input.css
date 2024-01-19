@@ -380,6 +380,10 @@ section {
             background-color: var(--primary);
             color: white;
         }
+
+        path {
+            fill: white;
+        }
     }
 
     &.selected {
