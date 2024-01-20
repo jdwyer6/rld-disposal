@@ -46,7 +46,6 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
             ...prevState,
             services: updatedServices
         }));
-        console.log(jobInfo)
     }
 
     const selectLocation = (location: string) => {
@@ -57,7 +56,6 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
             ...prevState,
             services: updatedServices
         }));
-        console.log(jobInfo)
     }
 
     const addAnotherService = () => {
@@ -166,6 +164,9 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                 )
             }
    
+            <div>
+                
+            </div>
             
         </div>
     );
