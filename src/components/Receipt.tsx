@@ -1,3 +1,4 @@
+import prices from "../data/prices";
 
 type receiptProps = {
     jobInfo: any,
@@ -6,6 +7,24 @@ type receiptProps = {
 
 const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
     const MOSalesTaxRate = .4225;
+
+    const calculateSubtotal = () => {
+        let subtotal = 0
+    
+        jobInfo.services.forEach((serviceItem: any) => {
+            let service = serviceItem.service;
+            let appliance = serviceItem.appliance;
+            let location = serviceItem.location;
+
+            let price = prices[serviceItem.service];
+            console.log(prices[serviceItem.service])
+
+        });
+    
+        return subtotal;
+    };
+
+    calculateSubtotal();
 
     return (
         <div className="container">

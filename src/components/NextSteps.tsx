@@ -20,15 +20,23 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
     const handlePaymentCheckboxChange = (event: any) => {
         setJobInfo((prevState: typeof jobInfo) => ({
             ...prevState,
-            payment_collected: event.target.checked
+            terms_of_service: {
+                ...prevState.terms_of_service,
+                payment: event.target.checked
+            }
         }));
+        console.log(jobInfo)
     };
-
+    
     const handleServiceAreaCheckboxChange = (event: any) => {
         setJobInfo((prevState: typeof jobInfo) => ({
             ...prevState,
-            serviceAreaChecked: event.target.checked
+            terms_of_service: {
+                ...prevState.terms_of_service,
+                service_area: event.target.checked
+            }
         }));
+        console.log(jobInfo)
     };
 
     return (
@@ -53,11 +61,11 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
                 <p>Please read and click the check boxes to confirm the following:</p>
                 <div>
                     <div className="d-flex">
-                    <input type="checkbox" id="payment" name="payment" required onChange={handlePaymentCheckboxChange} checked={jobInfo.payment_collected} />
+                    <input type="checkbox" id="payment" name="payment" required onChange={handlePaymentCheckboxChange} checked={jobInfo.terms_of_service.payment} />
                         <label htmlFor="payment">I understand that we only accept <b>cash</b>, <b>check</b> or <b>money order</b>.</label>
                     </div>
                     <div className="d-flex">
-                        <input type="checkbox" id="service-area" name="service-area" required onChange={handleServiceAreaCheckboxChange} checked={jobInfo.serviceAreaChecked} />
+                        <input type="checkbox" id="service-area" name="service-area" required onChange={handleServiceAreaCheckboxChange} checked={jobInfo.terms_of_service.service_area} />
                         <label htmlFor="service-area">I understand RLD Disposal only provides service within 40 miles of <b>St Louis</b> and <b>St Louis County</b></label>
                     </div>
                 </div>

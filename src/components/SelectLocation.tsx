@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getPositionOfLineAndCharacter } from "typescript";
 import { motion, AnimatePresence } from "framer-motion";
-import prices from '../data/prices';
+// import prices from '../data/prices';
 
 
 type PrivateProps = {
@@ -44,13 +44,13 @@ const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen, setCurr
                             <div className="flex flex-col mb-8">
                                 <label className="block text-gray-700 text-sm font-bold" htmlFor="address">Location</label>
                                 <button className="inline-flex w-full rounded border border-gray-7000 text-start bg-white px-4 py-2 text-sm font-medium text-gray-400 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-gray-100" aria-expanded="true" aria-haspopup="true" onClick={()=>setDropDownOpen(!dropDownOpen)}>{location}</button>
-                                <div className={`flex flex-col rounded border border-gray-700 bg-white px-4 py-2 shadow-sm ${dropDownOpen === true ? "block" : "hidden"}`}>
+                                {/* <div className={`flex flex-col rounded border border-gray-700 bg-white px-4 py-2 shadow-sm ${dropDownOpen === true ? "block" : "hidden"}`}>
                                     {Object.values(prices).map((item) => (
                                         <a key={item.name} className="hover:bg-gray-100 hover:cursor-pointer p-1" onClick={() => selectOption(item.description, false)}>
                                             ${item.price} {item.description}
                                         </a>
                                     ))}
-                                </div>
+                                </div> */}
                             </div>
                             {other === true ? (
                                 <div>

@@ -16,7 +16,20 @@ type serviceProps = {
 
 const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
     const appliances = ["Refrigerator", "Range", "Stove", "Oven", "Microwave", "Dishwasher", "Washer", "Dryer", "Wine Cooler", "Ice Maker", "Freezer", "Trash Compactor", "Garbage Disposal", "Vent Hood"]
-    const locations = ["Garage", "Driveway or Curb", "Inside the home"]
+    const locations = [
+        {
+            name: "curb",
+            description: "Driveway, curb or garage"
+        },
+        {
+            name: "inside",
+            description: "Inside the home - Uninstallation needed"
+        },
+        {
+            name: "inside-uninstalled",
+            description: "Inside the home - Appliance already uninstalled"
+        }
+    ];
     const [isRemove, setIsRemove] = useState(true);
     const currentService = jobInfo.services[index] || { service: '', appliance: '', location: '' };
     const isServiceRemove = currentService.service === "remove";
@@ -56,6 +69,7 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
             ...prevState,
             services: updatedServices
         }));
+        console.log(jobInfo)
     }
 
     const addAnotherService = () => {
@@ -139,10 +153,10 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                                     {locations.map((location, locationIndex) => (
                                         <option 
                                             key={locationIndex} 
-                                            value={location.toLowerCase()} 
-                                            className={`${currentService.location === location.toLowerCase() ? 'selected' : ''}`}
+                                            value={location.name} 
+                                            className={`${currentService.location === location? 'selected' : ''}`}
                                 >
-                                            {location}
+                                            {location.description}
                                         </option> ))}
                                 </select>
                             </motion.div>
@@ -165,7 +179,7 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
             }
    
             <div>
-                
+
             </div>
             
         </div>
