@@ -9,22 +9,30 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
     const MOSalesTaxRate = .4225;
 
     const calculateSubtotal = () => {
-        let subtotal = 0
+        let subtotal = 0;
+        jobInfo.services.forEach((serviceItem: { service: keyof typeof prices; appliance?: string; location?: string; }) => {
+            const serviceType = serviceItem.service; // 'remove' or 'install'
     
-        jobInfo.services.forEach((serviceItem: any) => {
-            let service = serviceItem.service;
-            let appliance = serviceItem.appliance;
-            let location = serviceItem.location;
-
-            let price = prices[serviceItem.service];
-            console.log(prices[serviceItem.service])
-
+            let servicePrice = 0;
+            if (serviceType === 'install' && serviceItem.appliance) {
+                servicePrice = prices.install[serviceItem.appliance as keyof typeof prices.install];
+            } else if (serviceType === 'remove' && serviceItem.location) {
+                servicePrice = prices.remove[serviceItem.location as keyof typeof prices.remove];
+            }
+    
+            subtotal += servicePrice;
         });
+
+        console.log(subtotal)
     
         return subtotal;
     };
 
-    calculateSubtotal();
+    const calculeateTaxes = () => {
+        const subtotal = calculateSubtotal();
+        const taxes = subtotal * MOSalesTaxRate;
+        return taxes;
+    }
 
     return (
         <div className="container">
@@ -44,13 +52,13 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
                     <p>{jobInfo.preferred_delivery_date.day.charAt(0).toUpperCase() + jobInfo.preferred_delivery_date.day.slice(1)} during the {jobInfo.preferred_delivery_date.time}</p>
                 </ul>
                 <div>
-                    <span><b>Subtotal:</b> $84.45</span>
+                    <span><b>Subtotal:</b> ${calculateSubtotal()}</span>
                 </div>
                 <div>
-                    <span><b>Taxes:</b> $12.45</span>
+                    <span><b>Taxes:</b> ${calculeateTaxes()}</span>
                 </div>
                 <div>
-                    <span><b>Estimated Total:</b> $12.45</span>
+                    <span><b>Estimated Total:</b> ${Math.round((calculateSubtotal() + calculeateTaxes()) * 100) / 100}</span>
                 </div>
             </section>
         </div>

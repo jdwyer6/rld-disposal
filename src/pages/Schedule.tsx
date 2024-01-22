@@ -31,7 +31,7 @@ const Schedule = () => {
         price: 0,
         first_name: "",
         last_name: "",
-        phont: "",
+        phone: "",
         confirmed_delivery_date: "",
         payment_collected: false,
         orderStatus: 0,

@@ -7,9 +7,33 @@ import { MotionConfig } from "framer-motion";
 import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPlus, faHouse, faCalendar, faList } from '@fortawesome/free-solid-svg-icons';
-
+import { db } from '../config/firebase';
+import { getDoc, getDocs, collection } from 'firebase/firestore';
 
 const Dashboard_Home = () => {
+    const jobsCollectionRef = collection(db, "jobs");
+    const [jobs, setJobs] = useState<{ id: string }[]>([]);
+
+
+    const getJobs = async () => {
+    
+        try {
+            const data = await getDocs(jobsCollectionRef)
+            const filteredData = data.docs.map(doc => ({
+                ...doc.data(),
+                id: doc.id
+            }))
+            
+            // ...
+            setJobs(filteredData);
+            
+        } catch (err) {
+            console.error(err)
+        }
+    
+    }
+
+    getJobs();
                     
     return ( 
         
@@ -44,6 +68,31 @@ const Dashboard_Home = () => {
                     </div>
                 </div>
                 <div>
+                {
+  jobs.map((job: any, index) => (
+    <div key={index} className="order-card">
+      <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
+      <p><strong>Phone: </strong>{job.phone}</p>
+      <p><strong>Number of Services: </strong>{job.number_of_services}</p>
+      {job.services.map((service:any, serviceIndex:number) => (
+        <div key={serviceIndex}>
+          <p><strong>Service: </strong>{service.service}</p>
+          <p><strong>Appliance: </strong>{service.appliance}</p>
+          <p><strong>Location: </strong>{service.location}</p>
+        </div>
+      ))}
+      <p><strong>Preferred Delivery Date: </strong>{job.preferred_delivery_date.day} at {job.preferred_delivery_date.time}</p>
+      <p><strong>Confirmed Delivery Date: </strong>{job.confirmed_delivery_date}</p>
+      <p><strong>Notes: </strong>"{job.notes}"</p>
+      <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
+      <p><strong>Payment Collected: </strong>{job.payment_collected ? 'Yes' : 'No'}</p>
+      <p><strong>Order Status: </strong>{job.orderStatus}</p>
+      <p><strong>Terms of Service Agreements: </strong>Payment - {job.terms_of_service.payment ? 'Agreed' : 'Not Agreed'}, Service Area - {job.terms_of_service.service_area ? 'Agreed' : 'Not Agreed'}</p>
+    </div>
+  ))
+}
+
+
                     <div className="order-card">
                         <p><strong>Customer: </strong>Mike D</p>
                         <p><strong>Date of Delivery: </strong>TBD</p>
