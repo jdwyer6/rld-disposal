@@ -69,7 +69,6 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
             ...prevState,
             services: updatedServices
         }));
-        console.log(jobInfo)
     }
 
     const addAnotherService = () => {
@@ -91,7 +90,6 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
         });
 
         jobInfo.number_of_services === index ? setButtonHideClass("show") : setButtonHideClass("hide")
-        console.log(jobInfo.number_of_services + 1)
     }
 
     const removeService = () => {
@@ -106,8 +104,6 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                 number_of_services: newNumberOfServices
             };
         });
-
-        console.log(jobInfo)
     }
 
 

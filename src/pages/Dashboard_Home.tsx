@@ -2,7 +2,7 @@ import SelectService from "../components/SelectService";
 import SelectAppliance from "../components/SelectAppliance";
 import SelectLocation from "../components/SelectLocation";
 import SelectTime from "../components/SelectTime";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MotionConfig } from "framer-motion";
 import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +13,9 @@ import { getDoc, getDocs, collection } from 'firebase/firestore';
 const Dashboard_Home = () => {
     const jobsCollectionRef = collection(db, "jobs");
     const [jobs, setJobs] = useState<{ id: string }[]>([]);
-
+    const orderStatus = ["Pending", "Accepted", "Delivered", "Complete"];
+    const [ showFullCard, setShowFullCard ] = useState(false);
+    const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
 
     const getJobs = async () => {
     
@@ -24,20 +26,30 @@ const Dashboard_Home = () => {
                 id: doc.id
             }))
             
-            // ...
+            
             setJobs(filteredData);
+            console.log(jobs)
             
         } catch (err) {
             console.error(err)
         }
-    
     }
 
-    getJobs();
+    const toggleCard = (id:number) => {
+        setExpandedCards({
+            ...expandedCards,
+            [id]: !expandedCards[id]
+        })
+
+    }
+
+    useEffect(() => {
+        getJobs();
+    }, []);
                     
     return ( 
         
-        <div className="flex container-main">
+        <div className="">
             <div className="border-r border-slate-200 w-1/6">
                 <div className="mt-10">
                     <ul>
@@ -68,51 +80,31 @@ const Dashboard_Home = () => {
                     </div>
                 </div>
                 <div>
-                {
-  jobs.map((job: any, index) => (
-    <div key={index} className="order-card">
-      <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
-      <p><strong>Phone: </strong>{job.phone}</p>
-      <p><strong>Number of Services: </strong>{job.number_of_services}</p>
-      {job.services.map((service:any, serviceIndex:number) => (
-        <div key={serviceIndex}>
-          <p><strong>Service: </strong>{service.service}</p>
-          <p><strong>Appliance: </strong>{service.appliance}</p>
-          <p><strong>Location: </strong>{service.location}</p>
-        </div>
-      ))}
-      <p><strong>Preferred Delivery Date: </strong>{job.preferred_delivery_date.day} at {job.preferred_delivery_date.time}</p>
-      <p><strong>Confirmed Delivery Date: </strong>{job.confirmed_delivery_date}</p>
-      <p><strong>Notes: </strong>"{job.notes}"</p>
-      <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
-      <p><strong>Payment Collected: </strong>{job.payment_collected ? 'Yes' : 'No'}</p>
-      <p><strong>Order Status: </strong>{job.orderStatus}</p>
-      <p><strong>Terms of Service Agreements: </strong>Payment - {job.terms_of_service.payment ? 'Agreed' : 'Not Agreed'}, Service Area - {job.terms_of_service.service_area ? 'Agreed' : 'Not Agreed'}</p>
-    </div>
-  ))
-}
-
-
-                    <div className="order-card">
-                        <p><strong>Customer: </strong>Mike D</p>
-                        <p><strong>Date of Delivery: </strong>TBD</p>
-                        <p><strong>Address: </strong>15 Jefferson Dr.</p>
-                        <p><strong>Job: </strong> Install Anti Tip Bracket</p>
-                        <p><strong>Notes: </strong> "Please complete ASAP."</p>
-                        <p><strong>Price: </strong> $45.00</p>
-                        <p><strong>Payment Collected: </strong> No</p>
-                        <p><strong>Order Status: </strong> Pending → <b className="color-status-accepted">Accepted</b> → Delivered → Complete</p>
-                    </div>
-                    <div className="order-card">
-                        <p><strong>Customer: </strong>Tim D</p>
-                        <p><strong>Date of Delivery: </strong> TBD</p>
-                        <p><strong>Address: </strong> 15 Jefferson Dr.</p>
-                        <p><strong>Job: </strong> Install Anti Tip Bracket</p>
-                        <p><strong>Notes: </strong> "Please complete ASAP."</p>
-                        <p><strong>Price: </strong> $45.00</p>
-                        <p><strong>Payment Collected: </strong> No</p>
-                        <p><strong>Order Status: </strong> <b className="color-status-pending">Pending</b> → Accepted → Delivered → Complete</p>
-                    </div>
+                    {jobs.map((job: any, index) => (
+                        <div key={index} className={`order-card status-${job.orderStatus}`} onClick={()=>toggleCard(job.id)}>
+                            
+                            <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
+                            <p><strong>Phone: </strong>{job.phone}</p>
+                            <a className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
+                            <div className={expandedCards[job.id] === true ? 'show' : 'hide'}>
+                                <b>Services Requested:</b>
+                                <ul>
+                                {job.services.map((service:any, serviceIndex:number) => (
+                                    <li key={serviceIndex}>
+                                        <span>{service.service} {service.appliance} {service.location}</span>
+                                    </li>
+                                ))}
+                                </ul>
+                                <p><strong>Preferred Delivery Date: </strong>{job.preferred_delivery_date.day} at {job.preferred_delivery_date.time}</p>
+                                <p><strong>Confirmed Delivery Date: </strong>{job.confirmed_delivery_date}</p>
+                                <p><strong>Notes: </strong>"{job.notes}"</p>
+                                <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
+                                <p><strong>Payment Collected: </strong>{job.payment_collected ? 'Yes' : 'No'}</p>
+                                <p><strong>Order Status: </strong>{orderStatus[job.orderStatus]}</p>
+                            </div>
+        
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

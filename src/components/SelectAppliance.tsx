@@ -18,7 +18,6 @@ const SelectAppliance = ({serviceVerb, setQuestionScreen, questionScreen, setCur
             ...currentJobInfo,
             appliances: updatedJob
         });
-        console.log(currentJobInfo)
         setQuestionScreen(questionScreen+=1)
     }
     return ( 

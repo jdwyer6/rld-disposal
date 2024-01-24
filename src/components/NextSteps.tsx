@@ -17,6 +17,13 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
         }));
     };
 
+    const handlePhoneChange = (event: any) => {
+        setJobInfo((prevState: typeof jobInfo) => ({
+            ...prevState,
+            phone: event.target.value
+        }));
+    };
+
     const handlePaymentCheckboxChange = (event: any) => {
         setJobInfo((prevState: typeof jobInfo) => ({
             ...prevState,
@@ -25,7 +32,6 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
                 payment: event.target.checked
             }
         }));
-        console.log(jobInfo)
     };
     
     const handleServiceAreaCheckboxChange = (event: any) => {
@@ -36,7 +42,6 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
                 service_area: event.target.checked
             }
         }));
-        console.log(jobInfo)
     };
 
     return (
@@ -55,9 +60,10 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
                 <label htmlFor="lastName">Last Name</label>
                 <input type="text" id="lastName" name="lastName" required onChange={handleLastNameChange} value={jobInfo.last_name} />
                 <label htmlFor="phone">Phone Number</label>
-                <input type="text" id="phone" name="phone" placeholder="123-456-7890" required/>
+                <input type="text" id="phone" name="phone" placeholder="xxx-xxx-xxxx" required onChange={handlePhoneChange}/>
 
                 <h3>One last thing...</h3>
+                <b>Terms of service</b>
                 <p>Please read and click the check boxes to confirm the following:</p>
                 <div>
                     <div className="d-flex">

@@ -22,9 +22,6 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
     
             subtotal += servicePrice;
         });
-
-        console.log(subtotal)
-    
         return subtotal;
     };
 
