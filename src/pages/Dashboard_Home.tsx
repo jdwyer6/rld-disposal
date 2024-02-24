@@ -49,7 +49,7 @@ const Dashboard_Home = () => {
                     
     return ( 
         
-        <div className="">
+        <div className="container">
             <div className="border-r border-slate-200 w-1/6">
                 <div className="mt-10">
                     <ul>
