@@ -575,3 +575,12 @@ section {
     }
     
 }
+
+.bg-image {
+    position: absolute;
+    width: 100%;
+}
+
+.relative {
+    display: relative;
+}
