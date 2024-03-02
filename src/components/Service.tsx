@@ -4,6 +4,7 @@ import { faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { MotionConfig, AnimatePresence, motion } from "framer-motion";
+import { Tooltip } from 'react-tooltip'
 
 
 
@@ -130,9 +131,13 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                                 <button 
                                     className={`btn-secondary ${currentService.appliance === appliance.toLowerCase() ? 'selected' : ''}`} 
                                     onClick={() => selectAppliance(appliance.toLowerCase())}
+                                    data-tooltip-id="another-service-tooltip"
+                                    data-tooltip-content="Add more with the 'add another service button.'"
+                                    data-tooltip-place="top"
                                 >
                                     {appliance}
                                 </button>
+                                <Tooltip id="another-service-tooltip" />
                             </div>
                         ))}
                     </div>
@@ -162,7 +167,7 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
                 </section>
                 <div className={buttonHideClass}>
                     <button onClick={addAnotherService} className="add-another-service-btn">
-                        + Add another service
+                        + Add another appliance or service
                     </button>
                 </div>
             </div>

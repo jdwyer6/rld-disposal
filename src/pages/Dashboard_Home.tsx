@@ -49,8 +49,8 @@ const Dashboard_Home = () => {
                     
     return ( 
         
-        <div className="container">
-            <div className="border-r border-slate-200 w-1/6">
+        <div className="container-fluid flex align-top my-md">
+            <div className="flex-1 dashboard-left-nav">
                 <div className="mt-10">
                     <ul>
                         <li className="mb-4"><a><FontAwesomeIcon className="mr-4" icon={faHouse} /> Home</a></li>
@@ -61,27 +61,19 @@ const Dashboard_Home = () => {
                 </div>
                 
             </div>
-            <div className="flex-grow ml-12">
+            <div className="flex-6">
                 <h2>Orders</h2>
                 <input className="border search-bar mb-sm" type="text" placeholder="Search" />
                 <b>Filter by:</b>
                 <div className="flex my-2 mb-sm">
-                    <div className="pill hover-secondary">
-                        <p>Date</p>
-                    </div>
-                    <div className="pill hover-secondary">
-                        <p>Service Status</p>
-                    </div>
-                    <div className="pill hover-secondary">
-                        <p>Payment Status</p>
-                    </div>
-                    <div className="pill hover-secondary">
-                        <p>To Do</p>
-                    </div>
+                    <div className="pill hover-secondary">Date</div>
+                    <div className="pill hover-secondary">Service Status</div>
+                    <div className="pill hover-secondary">Payment Status</div>
+                    <div className="pill hover-secondary">To Do</div>
                 </div>
                 <div>
                     {jobs.map((job: any, index) => (
-                        <div key={index} className={`order-card status-${job.orderStatus}`} onClick={()=>toggleCard(job.id)}>
+                        <div key={index} className={`order-card border-status-${job.orderStatus}`} onClick={()=>toggleCard(job.id)}>
                             
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
@@ -100,6 +92,12 @@ const Dashboard_Home = () => {
                                 <p><strong>Notes: </strong>"{job.notes}"</p>
                                 <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
                                 <p><strong>Payment Collected: </strong>{job.payment_collected ? 'Yes' : 'No'}</p>
+                                <div className="flex align-center">
+                                    <b className="mr-sm">Order Status: </b>
+                                {orderStatus.map((status, index) => (
+                                    <p style={{marginRight:'10px'}} className={status === orderStatus[job.orderStatus] ? `color-status-${index}` : ''} key={index}>{status} </p>
+                                ))}
+                                </div>
                                 <p><strong>Order Status: </strong>{orderStatus[job.orderStatus]}</p>
                             </div>
         

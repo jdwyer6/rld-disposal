@@ -1,5 +1,6 @@
 import { faMugSaucer, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tooltip } from 'react-tooltip'
 
 type schedulingProps = {
     jobInfo: any,
@@ -37,11 +38,21 @@ const Scheduling = ({ jobInfo, setJobInfo }: schedulingProps) => {
                 <p className="text-center">Do you prefer for us to arrive in the morning or afternoon?</p>
                 <div className="btn-container">
                     <div className={`btn-round ${jobInfo.preferred_delivery_date.time === "morning" ? 'selected' : ''}`} onClick={()=>selectTime("morning")}>
-                        <button><FontAwesomeIcon className="fa-2xl" icon={faMugSaucer}/></button>
+                        <button
+                            data-tooltip-id="morning-tooltip"
+                            data-tooltip-content="9:00 am - 12:00 pm"
+                            data-tooltip-place="top"
+                        ><FontAwesomeIcon className="fa-2xl" icon={faMugSaucer}/></button>
+                        <Tooltip id="morning-tooltip" />
                         <p>Morning</p>
                     </div>
                     <div className={`btn-round ${jobInfo.preferred_delivery_date.time === "afternoon" ? 'selected' : ''}`} onClick={()=>selectTime("afternoon")}>
-                        <button><FontAwesomeIcon className="fa-2xl" icon={faSun} /></button>
+                        <button
+                            data-tooltip-id="afternoon-tooltip"
+                            data-tooltip-content="1:30 pm - 4:30 pm"
+                            data-tooltip-place="top"
+                        ><FontAwesomeIcon className="fa-2xl" icon={faSun} /></button>
+                        <Tooltip id="afternoon-tooltip" />
                         <p>Afternoon</p>
                     </div>
                 </div>

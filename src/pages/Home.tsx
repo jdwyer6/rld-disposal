@@ -22,18 +22,10 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            
 
- 
-            
-
-    
-
-  
-
-
-                <div className="bg-primary text-white text-center py-6">
-                    <h1>We address all your appliance annoyances.</h1>
+            <div className="text-center my-lg">
+                <h1>We address all your appliance annoyances.</h1>
+                <div className="flex justify-around">
                     <div className="text-center">
                         <TbHomeOff className="icon-large" />
                         <p>Big box stores deliver but won't install?</p>
@@ -47,9 +39,11 @@ const Home = () => {
                         <p>Bought an appliance but have no one to deliver?</p>
                     </div>
                 </div>
+            </div>
 
-                <div className="container my-6">
-                    <h2 className="text-center my-9">Serving the greater St. Louis area since 1953.</h2>
+            <div>
+                <h2 className="text-center">Serving the greater St. Louis area since 1953.</h2>
+                <div className="flex justify-around">
                     <Card
                         title="Schedule an appointment online"
                         subtitle="Fast, easy and convenient. Pick a time that's right for you and pay online or in-person."
@@ -63,6 +57,8 @@ const Home = () => {
                         btnText="Learn more"
                     />
                 </div>
+    
+            </div>
   
         </div>
         

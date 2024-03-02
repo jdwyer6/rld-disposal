@@ -7,14 +7,13 @@ type CardProps = {
 
 const Card = (props: CardProps) => {
     return ( 
-        <div className='bg-white shadow-md rounded-3xl overflow-hidden p-12 max-w-2xl'>
+        <div className='card'>
             <h3>{props.title}</h3>
-            <p className='mb-6'>{props.subtitle}</p>
-            <div className='h-96 overflow-hidden mb-6'>
-                <img src={props.image} className='object-none object-bottom'/>
+            <p>{props.subtitle}</p>
+            <div className='image-container'>
+                <img src={props.image}/>
             </div>
-            
-            <button className='btn-primary w-full'><h5>{props.btnText}</h5></button>
+            <button className="text-white m-0">{props.btnText}</button>
         </div>
     );
 }
