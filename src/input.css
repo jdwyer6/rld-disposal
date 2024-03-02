@@ -1,8 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Rubik+Vinyl&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 @layer components {
     .primary {
@@ -16,6 +14,10 @@
     --gray: #1F2937;
     --white: #FFFFFF;
 } */
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
 
 /**
  * Custom theme
@@ -41,6 +43,10 @@
  h1 {
    --font-size: 2.5rem;
    --typography-spacing-vertical: 2.5rem;
+ }
+
+ .hero-text {
+    font-size: 64px;
  }
  
  h2 {
@@ -357,6 +363,10 @@ section {
     padding: 64px;
 }
 
+nav {
+    background-color: var(--primary);
+}
+
 .btn-round {
     display: flex;
     align-items: center;
@@ -477,10 +487,55 @@ section {
 
 .container {
     position: relative;
+    max-width: 1130px;
+}
+
+.container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10rem;
+}
+
+.justify-center {
+    display: flex;
+    justify-content: center;
 }
 
 .d-flex {
     display: flex;
+}
+
+.overlay:before{
+    content: '';
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, #2e2e2e, #2e2e2e96);
+    z-index: 300;
+}
+
+.hero {
+    width: 100%;
+    float: left;
+    height:100vh;
+    background: url(images/kitchen.jpg) center center no-repeat;
+  }
+
+.overlay {
+    position:relative;
+    display: block;
+  }
+  .overlay .content {
+      position: relative;
+      z-index: 400;
+  }
+
+.text-white {
+    color: white;
 }
 
 .modal-container {
@@ -496,10 +551,13 @@ section {
     position: relative;
 }
 
+.flex {
+    display: flex;
+}
 
-
-
-
+.flex-col {
+    flex-direction: column;
+}
 
 .progress-bar-icon::after{
     content: "";
@@ -510,6 +568,31 @@ section {
 
 .mb-sm {
     margin-bottom: 1.5rem;
+}
+
+.mb-lg {
+    margin-bottom: 5rem;
+}
+
+.my-lg {
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
 }
 
 /* Colors */
@@ -569,7 +652,8 @@ section {
 .color-status-complete {color: #115E59;}
 
 .brand-text {
-
+    margin-left: 8px;
+    
     &:hover {
         color: var(--gray);
     }
@@ -579,8 +663,4 @@ section {
 .bg-image {
     position: absolute;
     width: 100%;
-}
-
-.relative {
-    display: relative;
 }
