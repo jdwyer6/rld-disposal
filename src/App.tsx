@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Schedule from './pages/Schedule';
 import Dashboard_Home from './pages/Dashboard_Home';
+import Dashboard_Calendar from './pages/Dashboard_Calendar';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/schedule" element={<Schedule />}/>
           <Route path="/dashboard-home" element={<Dashboard_Home />} />
+          <Route path="/dashboard-calendar" element={<Dashboard_Calendar />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

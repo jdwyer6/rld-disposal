@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPlus, faHouse, faCalendar, faList } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../config/firebase';
 import { getDoc, getDocs, collection } from 'firebase/firestore';
+import DashboardNav from "../components/dashboardNav";
 
 const Dashboard_Home = () => {
     const jobsCollectionRef = collection(db, "jobs");
@@ -51,16 +52,9 @@ const Dashboard_Home = () => {
         
         <div className="container-fluid flex align-top my-md">
             <div className="flex-1 dashboard-left-nav">
-                <div className="mt-10">
-                    <ul>
-                        <li className="mb-4"><a><FontAwesomeIcon className="mr-4" icon={faHouse} /> Home</a></li>
-                        <li className="mb-4"><a><FontAwesomeIcon icon={faPlus} className="mr-4" /> Create</a></li>
-                        <li className="mb-4"><a><FontAwesomeIcon className="mr-4" icon={faCalendar} /> Calendar</a></li>
-                        <li className="mb-4"><a><FontAwesomeIcon className="mr-4" icon={faList} /> Services</a></li>
-                    </ul>
-                </div>
-                
+                <DashboardNav />
             </div>
+            
             <div className="flex-6">
                 <h2>Orders</h2>
                 <input className="border search-bar mb-sm" type="text" placeholder="Search" />
@@ -87,7 +81,7 @@ const Dashboard_Home = () => {
                                     </li>
                                 ))}
                                 </ul>
-                                <p><strong>Preferred Delivery Date: </strong>{job.preferred_delivery_date.day} at {job.preferred_delivery_date.time}</p>
+                                <p><strong>Preferred Delivery Date: </strong>{job.preferred_delivery_date.day} {job.preferred_delivery_date.time}</p>
                                 <p><strong>Confirmed Delivery Date: </strong>{job.confirmed_delivery_date}</p>
                                 <p><strong>Notes: </strong>"{job.notes}"</p>
                                 <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
