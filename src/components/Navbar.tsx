@@ -2,8 +2,9 @@ import logo from '../images/logo-white.png';
 import {Link} from 'react-router-dom';
 import LoginModal from './login_Modal';
 import React, { useState } from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 
-const Navbar = () => {
+const Navigation = () => {
     const [showModal, setShowModal] = useState(false);
     const openModal = () => {
         setShowModal(true);
@@ -14,23 +15,33 @@ const Navbar = () => {
     };
 
     return ( 
-            <nav className="container-fluid">
-                <ul>
-                    <Link to='/' className="flex items-center flex-shrink-0 text-white mr-6">
-                        <img src={logo} width='24' className='mr-3'/>
-                        <span className="font-semibold text-xl tracking-tight brand-text">RLD Disposal</span>
-                    </Link>
-                </ul>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">About</a></li>
-                    <li><a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white">Schedule</a></li>
-                    <li><a href="#" onClick={openModal} className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a></li>
-                </ul>
+        <>
+            <Navbar collapseOnSelect expand="lg" variant="dark">
+                <div className="container d-flex">
+                <Navbar.Brand href="/" className="me-5 d-flex align-center">
+                    <img src={logo} width='36' className='mr-3'/>
+                    <h5 className="ms-2 mb-0">RLD Disposal</h5>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav" className="d-flex justify-content-end">
+                    <Nav className="mr-auto">
+                        <Nav.Link href="#" className="me-2 shadow-none">Home</Nav.Link>
+                        <Nav.Link href="#responsive-header" className="me-2 shadow-none">About</Nav.Link>
+                        <Nav.Link href="#responsive-header" className="me-2 shadow-none">Schedule</Nav.Link>
+                    </Nav>
+                    <Nav>
+                    <Nav.Link href="#" onClick={openModal}>Login</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+                </div>
+
+            </Navbar>
                 
-                {showModal && <LoginModal onClose={closeModal} />}
-            </nav>
+            {showModal && <LoginModal onClose={closeModal} />}
+        </>
+
+
     );
 }
  
-export default Navbar;
+export default Navigation;

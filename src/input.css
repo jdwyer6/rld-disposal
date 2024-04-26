@@ -809,3 +809,7 @@ nav {
     font-weight: bold;
     color: var(--color-status-3)
 }
+
+button, a {
+    text-decoration: none !important;
+}
