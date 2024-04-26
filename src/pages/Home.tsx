@@ -16,7 +16,7 @@ const Home = () => {
                     <h1 className="text-white text-center hero-text">Don't know what to do with your appliances?</h1>
                     <h4 className="text-white text-center">Contact RLD Disposal today for quality appliance delivery, installation, removal, and more from technicians who care.</h4>
                     <div className="flex justify-center">
-                        <Link to="/schedule">
+                        <Link to="/services">
                             <button>Make an appointment</button>
                         </Link>
                     </div>
