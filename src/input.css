@@ -517,6 +517,10 @@ nav {
     align-items: flex-start;
 }
 
+.align-bottom {
+    align-items: flex-end;
+}
+
 .d-flex {
     display: flex;
 }
@@ -812,4 +816,16 @@ nav {
 
 button, a {
     text-decoration: none !important;
+}
+
+.appliance-selection-container {
+    display: flex;
+    justify-content: start;
+
+    button {
+        width: auto;
+        margin-right: 8px;
+    }
+    
+
 }

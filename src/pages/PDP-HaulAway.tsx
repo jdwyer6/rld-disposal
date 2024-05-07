@@ -7,11 +7,17 @@ import {Link} from 'react-router-dom';
 import PDP from '../components/PDP';
 import haulPhoto from '../images/move.jpg';
 
-const PDPHaulAway = () => {
+type pdpProps = {
+    jobInfo: any,
+    setJobInfo: any
+}
+
+
+const PDPHaulAway = ({jobInfo, setJobInfo}: pdpProps) => {
 
     return ( 
         <div className="container">
-            <PDP title="Haul Away an Appliance" photo={haulPhoto}/>
+            <PDP title="Haul Away an Appliance" photo={haulPhoto} startingPrice={19} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"haulAway"} showApplianceLocationDropdown={true}/>
   
         </div>
         
