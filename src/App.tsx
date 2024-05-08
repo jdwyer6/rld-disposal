@@ -43,12 +43,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation />
+        <Navigation jobInfo={jobInfo}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
-          <Route path="/pdp-haulAway" element={<PDPHaulAway jobInfo={jobInfo} setJobInfo={setJobInfo}/>} />
-          <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo}/>} />
+          <Route path="/pdp-haulAway" element={<PDPHaulAway jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
+          <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
           <Route path="/schedule" element={<Schedule />}/>
           <Route path="/dashboard-home" element={<Dashboard_Home />} />
           <Route path="/dashboard-calendar" element={<Dashboard_Calendar />} />

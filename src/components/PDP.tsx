@@ -23,8 +23,6 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             location: ""
     })
 
-    console.log(currentServices)
-
     const appliances = ["Refrigerator", "Range", "Stove", "Oven", "Microwave", "Dishwasher", "Washer", "Dryer", "Wine Cooler", "Ice Maker", "Freezer", "Trash Compactor", "Garbage Disposal", "Vent Hood"]
     const locations = [
         {
@@ -84,6 +82,18 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
 
     }, [])
 
+    const addToCart = () => {
+        setJobInfo((prevState: typeof jobInfo) => {
+            const updatedServices = [...prevState.services, currentServices];
+            const updatedJobInfo = { ...prevState, services: updatedServices };
+            
+            sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
+            
+            return updatedJobInfo;
+        });
+    }
+    
+
 
     return ( 
         <div className="container">
@@ -136,10 +146,19 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
 
                     )}
 
-                    <button>Add to Cart</button>
+                    <button onClick={addToCart}>Add to Cart</button>
                 </div>
                 
             </div>
+
+            {/* <div className="added-to-cart-modal">
+                <h1>Thanks for selecting a service</h1>
+                <p>What would you like to do now?</p>
+                <div className="btn-container">
+                    <button className="btn-secondary me-2">Add another service or appliance</button>
+                    <button className="ms-2">Finalize and submit</button>
+                </div>
+            </div> */}
 
         </div>
 
