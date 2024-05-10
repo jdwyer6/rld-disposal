@@ -12,16 +12,21 @@ type pdpProps = {
     jobInfo: any,
     setJobInfo: any,
     service: string,
-    showApplianceLocationDropdown: boolean
+    showApplianceLocationDropdown: boolean,
+    startingAppliance: string,
+    startingLocation: string
 }
 
-const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown}: pdpProps) => {
+const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation}: pdpProps) => {
 
     const [currentServices, setCurrentServices] = useState({
-            service: "",
-            appliance: "",
-            location: ""
+            service: service,
+            appliance: startingAppliance,
+            location: startingLocation,
+            price: startingPrice
     })
+
+    const [ showModal, setShowModal ] = useState(false);
 
     const appliances = ["Refrigerator", "Range", "Stove", "Oven", "Microwave", "Dishwasher", "Washer", "Dryer", "Wine Cooler", "Ice Maker", "Freezer", "Trash Compactor", "Garbage Disposal", "Vent Hood"]
     const locations = [
@@ -46,14 +51,36 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             "inside-uninstalled" : 65
         },
         "install": {
-            "refrigerator": 50,
-            "range": 50,
+            "refrigerator": 40,
+            "range": 60,
             "washer": 50,
-            "dryer": 50,
-            "dishwasher": 50,
-            "cooktop": 50,
-            "microwave": 50
+            "dryer": 80,
+            "dishwasher": 10,
+            "cooktop": 20,
+            "microwave": 40
         }
+    }
+
+    const setPrice = () => {
+        const service = currentServices.service as keyof typeof prices;
+        const location = currentServices.location as keyof typeof prices[typeof service];
+        const appliance = currentServices.appliance as keyof typeof prices[typeof service];
+        if (service === "haulAway") {
+            setCurrentServices((prevState: typeof currentServices) => ({
+                ...prevState,
+                price: prices[service][location]
+            }));
+        } else {
+            setCurrentServices((prevState: typeof currentServices) => ({
+                ...prevState,
+                price: prices[service][appliance]
+                
+            }));
+            console.log(currentServices.price)
+        }
+
+
+        // todo check if is haul away pdp or install and switch logic
     }
 
     const selectAppliance = (appliance: string) => {
@@ -79,18 +106,42 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             ...prevState,
             service: service
         }));
-
     }, [])
 
+    useEffect(() => {
+        setPrice();
+    }, [currentServices.service, currentServices.location, currentServices.appliance]);
+
     const addToCart = () => {
-        setJobInfo((prevState: typeof jobInfo) => {
-            const updatedServices = [...prevState.services, currentServices];
-            const updatedJobInfo = { ...prevState, services: updatedServices };
-            
-            sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
-            
-            return updatedJobInfo;
-        });
+        if (currentServices.service === "install") {
+            if (currentServices.appliance) {
+                setJobInfo((prevState: typeof jobInfo) => {
+                    const updatedServices = [...prevState.services, currentServices];
+                    const updatedJobInfo = { ...prevState, services: updatedServices };
+                    
+                    sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
+                    console.log(jobInfo);
+                    setShowModal(true);
+                    return updatedJobInfo;
+                });
+            } else {
+                alert("Please select an option for each field.")
+            }
+        } else {
+            if (currentServices.service && currentServices.appliance && currentServices.location) { 
+                setJobInfo((prevState: typeof jobInfo) => {
+                    const updatedServices = [...prevState.services, currentServices];
+                    const updatedJobInfo = { ...prevState, services: updatedServices };
+                    
+                    sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
+                    console.log(jobInfo);
+                    setShowModal(true);
+                    return updatedJobInfo;
+                });
+            } else {
+                alert("Please select an option for each field.")
+            }
+        }
     }
     
 
@@ -103,7 +154,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                 </div>
                 <div className="col ms-5">
                     <h1>{title}</h1>
-                        <h1>${jobInfo.price}</h1>
+                        <h1>${currentServices.price}</h1>
                     <hr></hr>
                     <strong>Select an appliance</strong>
                     <div className='flex flex-wrap justify-center appliance-selection-container'>
@@ -151,14 +202,23 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                 
             </div>
 
-            {/* <div className="added-to-cart-modal">
-                <h1>Thanks for selecting a service</h1>
-                <p>What would you like to do now?</p>
-                <div className="btn-container">
-                    <button className="btn-secondary me-2">Add another service or appliance</button>
-                    <button className="ms-2">Finalize and submit</button>
-                </div>
-            </div> */}
+                    {showModal ? (
+                        <div className="added-to-cart-modal">
+                            <h1>Thanks for selecting a service</h1>
+                            <p className="text-center">What would you like to do now?</p>
+                            <div className="btn-container">
+                                <Link to="/services" className="flex-1">
+                                    <button className="btn-secondary me-2">Add another service or appliance</button>
+                                </Link>
+                                <Link to="/" className="flex-1">
+                                    <button className="ms-2">Finalize and submit</button>
+                                </Link>
+                                
+                            </div>
+                        </div>
+                    ) : ''}
+
+
 
         </div>
 

@@ -17,7 +17,7 @@ const PDPHaulAway = ({jobInfo, setJobInfo}: pdpProps) => {
 
     return ( 
         <div className="container">
-            <PDP title="Haul Away an Appliance" photo={haulPhoto} startingPrice={19} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"haulAway"} showApplianceLocationDropdown={true}/>
+            <PDP title="Haul Away an Appliance" photo={haulPhoto} startingPrice={19} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"haulAway"} showApplianceLocationDropdown={true} startingAppliance={"refrigerator"} startingLocation={"curb"}/>
   
         </div>
         
