@@ -10,6 +10,7 @@ const Notes = ({ jobInfo, setJobInfo }: notesProps) => {
             notes: event.target.value
         }));
     }
+    
     return (
         <div className="container">
             <section>

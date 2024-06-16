@@ -4,6 +4,7 @@ import LoginModal from './login_Modal';
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { start } from 'repl';
+import { getSessionService } from '../services/sessionService';
 
 type pdpProps = {
     title: string,
@@ -76,7 +77,6 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                 price: prices[service][appliance]
                 
             }));
-            console.log(currentServices.price)
         }
 
 
@@ -112,40 +112,59 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
         setPrice();
     }, [currentServices.service, currentServices.location, currentServices.appliance]);
 
-    const addToCart = () => {
-        if (currentServices.service === "install") {
-            if (currentServices.appliance) {
-                setJobInfo((prevState: typeof jobInfo) => {
-                    const updatedServices = [...prevState.services, currentServices];
-                    const updatedJobInfo = { ...prevState, services: updatedServices };
-                    
-                    sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
-                    console.log(jobInfo);
-                    setShowModal(true);
-                    return updatedJobInfo;
-                });
-            } else {
-                alert("Please select an option for each field.")
-            }
-        } else {
-            if (currentServices.service && currentServices.appliance && currentServices.location) { 
-                setJobInfo((prevState: typeof jobInfo) => {
-                    const updatedServices = [...prevState.services, currentServices];
-                    const updatedJobInfo = { ...prevState, services: updatedServices };
-                    
-                    sessionStorage.setItem('jobInfo', JSON.stringify(updatedJobInfo));
-                    console.log(jobInfo);
-                    setShowModal(true);
-                    return updatedJobInfo;
-                });
-            } else {
-                alert("Please select an option for each field.")
-            }
-        }
-    }
+    // const addToCart = () => {
+    //     const sessionJobInfoString = sessionStorage.getItem('services');
+    //     const sessionJobInfo = sessionJobInfoString ? JSON.parse(sessionJobInfoString) : { services: [] };
     
 
+    //         if (currentServices.appliance) {
+    //             // Update the services array
+    //             const updatedServices = [...sessionJobInfo.services, currentServices];
+    //             const updatedJobInfo = { ...sessionJobInfo, services: updatedServices };
+                
+    //             // Save the updated jobInfo to session storage
+    //             sessionStorage.setItem('services', JSON.stringify(updatedJobInfo));
+    //             setShowModal(true);
+    //             // Update the state based on the updated session storage
+    //             setJobInfo(updatedJobInfo);
+    //         } else {
+    //             alert("Please select an option for each field.");
+    //         }
+    //     } else {
+    //         if (currentServices.service && currentServices.appliance && currentServices.location) {
+    //             const updatedServices = [...sessionJobInfo.services, currentServices];
+    //             const updatedJobInfo = { ...sessionJobInfo, services: updatedServices };
+                
+    //             // Save the updated jobInfo to session storage
+    //             sessionStorage.setItem('services', JSON.stringify(updatedJobInfo));
+    //             setShowModal(true);
+    //             // Update the state based on the updated session storage
+    //             setJobInfo(updatedJobInfo);
+    //         } else {
+    //             alert("Please select an option for each field.");
+    //         }
+    //     }
+    // };
 
+    const addToCart = () => {
+        // Retrieve the current jobInfo from session storage and handle the case where it might be null
+        const sessionJobInfoString = sessionStorage.getItem('services');
+        const sessionJobInfo = sessionJobInfoString ? JSON.parse(sessionJobInfoString) : { services: [] };
+    
+
+            sessionJobInfo.push(currentServices);
+            
+            // Save the updated services array to session storage
+            sessionStorage.setItem('services', JSON.stringify(sessionJobInfo));
+            
+            // Optionally, show a modal or perform any other actions
+            setShowModal(true);
+    };
+    
+    
+    
+    
+    
     return ( 
         <div className="container">
             <div className='row mt-5'>
@@ -210,7 +229,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                                 <Link to="/services" className="flex-1">
                                     <button className="btn-secondary me-2">Add another service or appliance</button>
                                 </Link>
-                                <Link to="/" className="flex-1">
+                                <Link to="/cart" className="flex-1">
                                     <button className="ms-2">Finalize and submit</button>
                                 </Link>
                                 

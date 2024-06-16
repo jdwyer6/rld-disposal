@@ -629,6 +629,22 @@ nav {
     margin-right: 10px;
 }
 
+.m-lg {
+    margin: 5rem;
+}
+
+.p-sm {
+    padding: 1.5rem;
+}
+
+.p-md {
+    padding: 3rem;
+}
+
+.p-lg {
+    padding: 5rem;
+}
+
 .w-100 {
     width: 100%;
 }
@@ -705,6 +721,16 @@ nav {
     cursor: pointer;
     background-color: var(--gray);
     color: white;
+}
+
+.hover-text-primary:hover {
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.hover-text-delete:hover {
+    cursor: pointer;
+    color: var(--del-color);
 }
 
 .order-card {
@@ -853,4 +879,26 @@ button, a {
     left: 50%;
     transform: translateX(-50%);
     width: 50vw;
+}
+
+.cart-item-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.validation-list li {
+    color: var(--del-color);
 }

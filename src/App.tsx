@@ -9,17 +9,18 @@ import PDPHaulAway from './pages/PDP-HaulAway';
 import PDPInstall from './pages/PDP-Install';
 import Dashboard_Home from './pages/Dashboard_Home';
 import Dashboard_Calendar from './pages/Dashboard_Calendar';
+import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 
 function App() {
   const [ jobInfo, setJobInfo ] = useState({
     services: [
-        {
-            service: "",
-            appliance: "",
-            location: ""
-        }
+        // {
+        //     service: "",
+        //     appliance: "",
+        //     location: ""
+        // }
     ],
     preferred_delivery_date: {
         time: "",
@@ -49,9 +50,10 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/pdp-haulAway" element={<PDPHaulAway jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
           <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/schedule" element={<Schedule />}/>
-          <Route path="/dashboard-home" element={<Dashboard_Home />} />
-          <Route path="/dashboard-calendar" element={<Dashboard_Calendar />} />
+          <Route path="/admin" element={<Dashboard_Home />} />
+          <Route path="/admin/calendar" element={<Dashboard_Calendar />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>
