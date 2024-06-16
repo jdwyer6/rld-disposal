@@ -9,6 +9,7 @@ import PDPHaulAway from './pages/PDP-HaulAway';
 import PDPInstall from './pages/PDP-Install';
 import Dashboard_Home from './pages/Dashboard_Home';
 import Dashboard_Calendar from './pages/Dashboard_Calendar';
+import ThankYou from './pages/Thank-You';
 import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
@@ -41,19 +42,22 @@ function App() {
     }
   });
 
+  const [ numOfCartItems, setNumOfCartItems ] = useState(0);
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navigation jobInfo={jobInfo}/>
+        <Navigation  numOfCartItems={numOfCartItems} setNumOfCartItems={setNumOfCartItems} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/pdp-haulAway" element={<PDPHaulAway jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
-          <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo} />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/services" element={<Services numOfCartItems={numOfCartItems} />} />
+          <Route path="/pdp-haulAway" element={<PDPHaulAway jobInfo={jobInfo} setJobInfo={setJobInfo} setNumOfCartItems={setNumOfCartItems}/>} />
+          <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo} setNumOfCartItems={setNumOfCartItems}/>} />
+          <Route path="/cart" element={<Cart setNumOfCartItems={setNumOfCartItems} />} />
           <Route path="/schedule" element={<Schedule />}/>
           <Route path="/admin" element={<Dashboard_Home />} />
           <Route path="/admin/calendar" element={<Dashboard_Calendar />} />
+          <Route path="/thankyou" element={<ThankYou />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

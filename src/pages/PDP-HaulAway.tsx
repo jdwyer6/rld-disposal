@@ -9,15 +9,16 @@ import haulPhoto from '../images/move.jpg';
 
 type pdpProps = {
     jobInfo: any,
-    setJobInfo: any
+    setJobInfo: any,
+    setNumOfCartItems: any
 }
 
 
-const PDPHaulAway = ({jobInfo, setJobInfo}: pdpProps) => {
+const PDPHaulAway = ({jobInfo, setJobInfo, setNumOfCartItems}: pdpProps) => {
 
     return ( 
         <div className="container">
-            <PDP title="Haul Away an Appliance" photo={haulPhoto} startingPrice={19} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"haulAway"} showApplianceLocationDropdown={true} startingAppliance={"refrigerator"} startingLocation={"curb"}/>
+            <PDP title="Haul Away an Appliance" photo={haulPhoto} startingPrice={19} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"haulAway"} showApplianceLocationDropdown={true} startingAppliance={"refrigerator"} startingLocation={"curb"} setNumOfCartItems={setNumOfCartItems}/>
   
         </div>
         

@@ -1,25 +1,32 @@
-import homePhoto from '../images/kitchen.jpg';
-import cardSchedule from '../images/cardSchedule.jpg';
-import cardLearnMore from '../images/cardLearnMore.jpg';
-import {TbHomeOff, TbTrash, TbTruckDelivery} from 'react-icons/tb';
 import Card from '../components/card';
 import {Link} from 'react-router-dom';
-import installPhoto from '../images/install.jpg';
-import haulPhoto from '../images/move.jpg';
+import installPhoto from '../images/install.png';
+import haulPhoto from '../images/haulAway.png';
 
-const Services = () => {
+type servicesProps = {
+    numOfCartItems: number
+}
+
+const Services = ({numOfCartItems}: servicesProps) => {
 
     return ( 
         <div className="container flex flex-col">
             <h1 className="text-center my-5">Services</h1>
-            <div className="d-flex justify-content-around flex-wrap">
-                <Link to="/pdp-haulAway" className="mb-5">
+            <div className="flex justify-around flex-wrap">
+                <Link to="/pdp-haulAway" className="mb-5 flex-1">
                     <Card title="Haul away an appliance" subtitle="Starting at $19" image={haulPhoto} btnText="Schedule"/>
                 </Link>
-                <Link to="/pdp-install" className="mb-5">
+                <Link to="/pdp-install" className="mb-5 flex-1">
                     <Card title="Install an appliance" subtitle="Starting at $49" image={installPhoto} btnText="Schedule"/>
                 </Link>
             </div>
+            {numOfCartItems > 0 && (
+                <Link to="/cart">
+                    <button>Go To Checkout</button>
+                </Link>
+                
+            )}
+            
             
         </div>
         

@@ -11,12 +11,20 @@ import { db } from '../config/firebase';
 import { getDoc, getDocs, collection } from 'firebase/firestore';
 import DashboardNav from "../components/dashboardNav";
 
+type Job = {
+    id: string;
+    first_name?: string;
+    last_name?: string;
+};
+
 const Dashboard_Home = () => {
     const jobsCollectionRef = collection(db, "jobs");
-    const [jobs, setJobs] = useState<{ id: string }[]>([]);
+    const [jobs, setJobs] = useState<Job[]>([]);
+const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
     const orderStatus = ["Pending", "Accepted", "Delivered", "Complete"];
     const [ showFullCard, setShowFullCard ] = useState(false);
     const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
+    const [searchInput, setSearchInput] = useState("");
 
     const getJobs = async () => {
     
@@ -47,6 +55,19 @@ const Dashboard_Home = () => {
     useEffect(() => {
         getJobs();
     }, []);
+
+    useEffect(() => {
+        const searchFilter = jobs.filter(job => {
+            return job.first_name?.toLowerCase().includes(searchInput.toLowerCase()) || job.last_name?.toLowerCase().includes(searchInput.toLowerCase());
+        });
+        setFilteredJobs(searchFilter);
+    }, [searchInput, jobs]);
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(e.target.value);
+    };
+
+    
                     
     return ( 
         
@@ -57,20 +78,31 @@ const Dashboard_Home = () => {
             
             <div className="flex-6">
                 <h2>Orders</h2>
-                <input className="border search-bar mb-sm" type="text" placeholder="Search" />
-                <b>Filter by:</b>
-                <div className="flex my-2 mb-sm">
-                    <div className="pill hover-secondary">Date</div>
-                    <div className="pill hover-secondary">Service Status</div>
-                    <div className="pill hover-secondary">Payment Status</div>
-                    <div className="pill hover-secondary">To Do</div>
+                <input
+                className="mb-sm"
+                type="text"
+                placeholder="Search by name..."
+                value={searchInput}
+                onChange={handleSearchChange}
+                />
+
+                <div className="mb-sm">
+                    <b>Sort by:</b>
+                    <select className="my-2 mb-sm">
+                        <option value="date">Date</option>
+                        <option value="serviceStatus">Service Status</option>
+                        <option value="paymentStatus">Payment Status</option>
+                        <option value="todo">To Do</option>
+                    </select>
                 </div>
+                
                 <div>
-                    {jobs.map((job: any, index) => (
+                    {filteredJobs.map((job: any, index) => (
                         <div key={index} className={`order-card border-status-${job.orderStatus}`} onClick={()=>toggleCard(job.id)}>
                             
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
+                            <p><strong>Data Submitted: </strong>{job.createdAt ? job.createdAt : "N/A"}</p>
                             <a className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
                             <div className={expandedCards[job.id] === true ? 'show' : 'hide'}>
                                 <b>Services Requested:</b>
@@ -94,7 +126,7 @@ const Dashboard_Home = () => {
                                 </div>
                                 <p><strong>Order Status: </strong>{orderStatus[job.orderStatus]}</p>
                             </div>
-        
+
                         </div>
                     ))}
                 </div>

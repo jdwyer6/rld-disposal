@@ -7,18 +7,18 @@ import { BsCart4 } from "react-icons/bs";
 import { getSessionService } from '../services/sessionService';
 
 type cartProps = {
-    jobInfo: any
+    numOfCartItems: number,
+    setNumOfCartItems: any
 }
 
 
-const Navigation = ({jobInfo}: cartProps) => {
+const Navigation = ({numOfCartItems, setNumOfCartItems}: cartProps) => {
     const [showModal, setShowModal] = useState(false);
-    const servicesData = sessionStorage.getItem('services');
-    const [services, setServices] = useState(JSON.parse(servicesData ? servicesData : '[]'));
 
-    // useEffect(() => {
-    //     setServices(getSessionService('services').services || []);
-    // }, [services]);
+    useEffect(() => {
+        const newServices = sessionStorage.getItem('services');
+        setNumOfCartItems(newServices ? JSON.parse(newServices).length : 0);
+    }, [numOfCartItems]);
 
     const openModal = () => {
         setShowModal(true);
@@ -41,10 +41,10 @@ const Navigation = ({jobInfo}: cartProps) => {
                         <Nav className="mr-auto">
                             <Nav.Link href="/" className="me-2 shadow-none">Home</Nav.Link>
                             <Nav.Link href="/about" className="me-2 shadow-none">About</Nav.Link>
-                            <Nav.Link href="/services" className="me-2 shadow-none">Schedule</Nav.Link>
+                            <Nav.Link href="/services" className="me-2 shadow-none">Services</Nav.Link>
                             <Nav.Link href="/cart" className="nav-cart-container me-2 shadow-none" onClick={openModal}>
                                 <BsCart4 />
-                                <div className="cart-num">{services.length > 0 ? services.length : ''}</div>
+                                <div className="cart-num">{numOfCartItems > 0 ? numOfCartItems : ''}</div>
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>

@@ -9,15 +9,16 @@ import installPhoto from '../images/install.jpg';
 
 type pdpProps = {
     jobInfo: any,
-    setJobInfo: any
+    setJobInfo: any,
+    setNumOfCartItems: any
 }
 
-const PDPInstall = ({jobInfo, setJobInfo}: pdpProps) => {
+const PDPInstall = ({jobInfo, setJobInfo, setNumOfCartItems}: pdpProps) => {
 
     return ( 
         <div className="container">
 
-            <PDP title="Install an Appliance" photo={installPhoto} startingPrice={49} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"install"} showApplianceLocationDropdown={false} startingAppliance={"refrigerator"} startingLocation={""}/>
+            <PDP title="Install an Appliance" photo={installPhoto} startingPrice={49} jobInfo={jobInfo} setJobInfo={setJobInfo} service={"install"} showApplianceLocationDropdown={false} startingAppliance={"refrigerator"} startingLocation={""} setNumOfCartItems={setNumOfCartItems}/>
   
         </div>
         

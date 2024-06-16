@@ -8,13 +8,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DOMPurify from 'dompurify';
 import { db } from '../config/firebase';
 import { addDoc, collection } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 
-type JobInfoType = { id: number, name: string, quantity: number };
+type cartProps = {
+    setNumOfCartItems: any
+}
 
-const Cart  = () => {
+
+const Cart  = ({setNumOfCartItems}: cartProps) => {
     const servicesData = sessionStorage.getItem('services');
     const [services, setServices] = useState(JSON.parse(servicesData ? servicesData : '[]'));
+    const navigate = useNavigate();
 
     const [jobInfo, setJobInfo] = useState({
         services: services,
@@ -70,6 +75,10 @@ const Cart  = () => {
         const updatedJobInfo = { ...jobInfo, services: updatedCartItems };
         sessionStorage.setItem('services', JSON.stringify(updatedJobInfo.services));
         setJobInfo(updatedJobInfo);
+
+        // Update the number of cart items in the navigation bar
+        const newServices = sessionStorage.getItem('services');
+        setNumOfCartItems(newServices ? JSON.parse(newServices).length : 0);
     };
 
     const handleFirstNameChange = (event: any) => {
@@ -179,7 +188,9 @@ const Cart  = () => {
     const onSubmit = async () => {
         try {
             await addDoc(jobsCollectionRef, jobInfo);
-            alert("Your request has been submitted. We will contact you shortly to confirm your appointment.")
+            sessionStorage.removeItem('services');
+            navigate('/thankyou');
+
         } catch (err) {
             console.error(err);
             alert("There was an error submitting your request. Please try again later.")

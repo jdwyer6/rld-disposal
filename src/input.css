@@ -606,6 +606,11 @@ nav {
     margin-bottom: 5rem;
 }
 
+.my-sm {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+}
+
 .my-lg {
     margin-bottom: 5rem;
     margin-top: 5rem;
@@ -614,6 +619,11 @@ nav {
 .my-md {
     margin-bottom: 3rem;
     margin-top: 3rem;
+}
+
+.mt-lg {
+    margin-top: 5rem;
+
 }
 
 .mx-auto {
@@ -731,6 +741,11 @@ nav {
 .hover-text-delete:hover {
     cursor: pointer;
     color: var(--del-color);
+}
+
+.hover-primary-border:hover {
+    border: 1px solid var(--primary);
+    cursor: pointer;
 }
 
 .order-card {

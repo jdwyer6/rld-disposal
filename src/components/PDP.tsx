@@ -15,10 +15,11 @@ type pdpProps = {
     service: string,
     showApplianceLocationDropdown: boolean,
     startingAppliance: string,
-    startingLocation: string
+    startingLocation: string,
+    setNumOfCartItems?: any
 }
 
-const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation}: pdpProps) => {
+const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation, setNumOfCartItems}: pdpProps) => {
 
     const [currentServices, setCurrentServices] = useState({
             service: service,
@@ -111,59 +112,29 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
     useEffect(() => {
         setPrice();
     }, [currentServices.service, currentServices.location, currentServices.appliance]);
-
-    // const addToCart = () => {
-    //     const sessionJobInfoString = sessionStorage.getItem('services');
-    //     const sessionJobInfo = sessionJobInfoString ? JSON.parse(sessionJobInfoString) : { services: [] };
     
-
-    //         if (currentServices.appliance) {
-    //             // Update the services array
-    //             const updatedServices = [...sessionJobInfo.services, currentServices];
-    //             const updatedJobInfo = { ...sessionJobInfo, services: updatedServices };
-                
-    //             // Save the updated jobInfo to session storage
-    //             sessionStorage.setItem('services', JSON.stringify(updatedJobInfo));
-    //             setShowModal(true);
-    //             // Update the state based on the updated session storage
-    //             setJobInfo(updatedJobInfo);
-    //         } else {
-    //             alert("Please select an option for each field.");
-    //         }
-    //     } else {
-    //         if (currentServices.service && currentServices.appliance && currentServices.location) {
-    //             const updatedServices = [...sessionJobInfo.services, currentServices];
-    //             const updatedJobInfo = { ...sessionJobInfo, services: updatedServices };
-                
-    //             // Save the updated jobInfo to session storage
-    //             sessionStorage.setItem('services', JSON.stringify(updatedJobInfo));
-    //             setShowModal(true);
-    //             // Update the state based on the updated session storage
-    //             setJobInfo(updatedJobInfo);
-    //         } else {
-    //             alert("Please select an option for each field.");
-    //         }
-    //     }
-    // };
-
     const addToCart = () => {
-        // Retrieve the current jobInfo from session storage and handle the case where it might be null
-        const sessionJobInfoString = sessionStorage.getItem('services');
-        const sessionJobInfo = sessionJobInfoString ? JSON.parse(sessionJobInfoString) : { services: [] };
+        // Retrieve the current services array from session storage and handle the case where it might be null
+        const servicesString = sessionStorage.getItem('services');
+        const services = servicesString ? JSON.parse(servicesString) : [];
     
-
-            sessionJobInfo.push(currentServices);
+        if (currentServices.appliance) {
+            // Push the current service to the services array
+            services.push(currentServices);
             
             // Save the updated services array to session storage
-            sessionStorage.setItem('services', JSON.stringify(sessionJobInfo));
+            sessionStorage.setItem('services', JSON.stringify(services));
+
+            // Update the number of cart items in the navigation bar
+            const newServices = sessionStorage.getItem('services');
+            setNumOfCartItems(newServices ? JSON.parse(newServices).length : 0);
             
             // Optionally, show a modal or perform any other actions
             setShowModal(true);
+        } else {
+            alert("Please select an option for each field.");
+        }
     };
-    
-    
-    
-    
     
     return ( 
         <div className="container">
