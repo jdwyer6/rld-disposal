@@ -10,6 +10,7 @@ import PDPInstall from './pages/PDP-Install';
 import Dashboard_Home from './pages/Dashboard_Home';
 import Dashboard_Calendar from './pages/Dashboard_Calendar';
 import ThankYou from './pages/Thank-You';
+import ShutOff from './pages/Shut-Off';
 import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
@@ -55,9 +56,10 @@ function App() {
           <Route path="/pdp-install" element={<PDPInstall jobInfo={jobInfo} setJobInfo={setJobInfo} setNumOfCartItems={setNumOfCartItems}/>} />
           <Route path="/cart" element={<Cart setNumOfCartItems={setNumOfCartItems} />} />
           <Route path="/schedule" element={<Schedule />}/>
+          <Route path="/thankyou" element={<ThankYou />} />
           <Route path="/admin" element={<Dashboard_Home />} />
           <Route path="/admin/calendar" element={<Dashboard_Calendar />} />
-          <Route path="/thankyou" element={<ThankYou />} />
+          <Route path="/admin/shutoff" element={<ShutOff />} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

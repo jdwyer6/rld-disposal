@@ -7,9 +7,8 @@ import { Tooltip } from 'react-tooltip'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DOMPurify from 'dompurify';
 import { db } from '../config/firebase';
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
-
 
 type cartProps = {
     setNumOfCartItems: any
@@ -187,8 +186,14 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
 
     const onSubmit = async () => {
         try {
-            await addDoc(jobsCollectionRef, jobInfo);
+            const jobInfoWithTimestamp = {
+                ...jobInfo,
+                createdAt: serverTimestamp(),
+            };
+
+            await addDoc(jobsCollectionRef, jobInfoWithTimestamp);
             sessionStorage.removeItem('services');
+            setNumOfCartItems(0);
             navigate('/thankyou');
 
         } catch (err) {

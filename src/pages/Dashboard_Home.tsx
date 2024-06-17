@@ -8,19 +8,24 @@ import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faPlus, faHouse, faCalendar, faList } from '@fortawesome/free-solid-svg-icons';
 import { db } from '../config/firebase';
-import { getDoc, getDocs, collection } from 'firebase/firestore';
+import { getDoc, getDocs, collection, Timestamp } from 'firebase/firestore';
 import DashboardNav from "../components/dashboardNav";
 
 type Job = {
     id: string;
     first_name?: string;
     last_name?: string;
+    createdAt?: Timestamp;
+    orderStatus?: number;
+    payment_collected?: boolean; 
 };
 
 const Dashboard_Home = () => {
     const jobsCollectionRef = collection(db, "jobs");
     const [jobs, setJobs] = useState<Job[]>([]);
-const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+    const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+    const [sortOption, setSortOption] = useState('date');
+    const [sortedJobs, setSortedJobs] = useState(filteredJobs);
     const orderStatus = ["Pending", "Accepted", "Delivered", "Complete"];
     const [ showFullCard, setShowFullCard ] = useState(false);
     const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
@@ -63,15 +68,85 @@ const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
         setFilteredJobs(searchFilter);
     }, [searchInput, jobs]);
 
+    useEffect(() => {
+        const sortJobs = () => {
+            let sorted = [...filteredJobs];
+            if (sortOption === 'date') {
+                sorted = sorted.sort((a, b) => {
+                    const dateA = a.createdAt ? a.createdAt.toDate().getTime() : Number.MAX_SAFE_INTEGER;
+                    const dateB = b.createdAt ? b.createdAt.toDate().getTime() : Number.MAX_SAFE_INTEGER;
+                    return dateA - dateB;
+                });
+            } else if (sortOption === 'paymentStatus:due') {
+                sorted = sorted.sort((a, b) => {
+                    const paymentA = a.payment_collected ? 1 : 0;
+                    const paymentB = b.payment_collected ? 1 : 0;
+                    console.log(sortOption, a.payment_collected, b.payment_collected);
+                    return paymentA - paymentB;
+                });
+            } else if (sortOption === 'paymentStatus:paid') {
+                sorted = sorted.sort((a, b) => {
+                    const paymentA = a.payment_collected ? 0 : 1;
+                    const paymentB = b.payment_collected ? 0 : 1;
+                    return paymentA - paymentB;
+                });
+            } else if (sortOption === 'serviceStatus:pending') {
+                sorted = sorted.sort((a, b) => {
+                    const statusAString = a.orderStatus !== undefined ? a.orderStatus.toString() : "0";
+                    const statusBString = b.orderStatus !== undefined ? b.orderStatus.toString() : "0";
+
+                    const statusA = parseInt(statusAString, 10);
+                    const statusB = parseInt(statusBString, 10);
+
+                    if (statusA === 0 && statusB !== 0) return -1; 
+                    if (statusB === 0 && statusA !== 0) return 1;  
+                    return statusA - statusB;
+                });
+            }else if (sortOption === 'serviceStatus:accepted') {
+                sorted = sorted.sort((a, b) => {
+                    // Assuming 'delivered' orders have a specific orderStatus value
+                    // Adjust the logic to prioritize 'delivered' orders as needed
+                    const isDeliveredA = a.orderStatus === 1 ? 1 : 0;
+                    const isDeliveredB = b.orderStatus === 1 ? 1 : 0;
+                    return isDeliveredB - isDeliveredA;
+                });
+            }else if (sortOption === 'serviceStatus:delivered') {
+                sorted = sorted.sort((a, b) => {
+                    // Assuming 'delivered' orders have a specific orderStatus value
+                    // Adjust the logic to prioritize 'delivered' orders as needed
+                    const isDeliveredA = a.orderStatus === 2 ? 1 : 0;
+                    const isDeliveredB = b.orderStatus === 2 ? 1 : 0;
+                    return isDeliveredB - isDeliveredA;
+                });
+            } else if (sortOption === 'serviceStatus:complete') {
+                sorted = sorted.sort((a, b) => {
+                    // Assuming 'complete' orders have a specific orderStatus value
+                    // Adjust the logic to prioritize 'complete' orders as needed
+                    const isCompleteA = a.orderStatus === 3 ? 1 : 0;
+                    const isCompleteB = b.orderStatus === 3 ? 1 : 0;
+                    return isCompleteB - isCompleteA;
+                });
+            }
+
+            setFilteredJobs(sorted);
+        };
+        sortJobs();
+    }, [sortOption]);
+
+
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value);
     };
 
-    
+    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const { value } = e.target;
+        console.log('Sort Option Changed: ', value);
+        setSortOption(value);
+    };
                     
     return ( 
         
-        <div className="container-fluid flex align-top my-md">
+        <div className="container flex align-top my-md">
             <div className="flex-1 dashboard-left-nav">
                 <DashboardNav />
             </div>
@@ -88,11 +163,20 @@ const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
 
                 <div className="mb-sm">
                     <b>Sort by:</b>
-                    <select className="my-2 mb-sm">
-                        <option value="date">Date</option>
-                        <option value="serviceStatus">Service Status</option>
-                        <option value="paymentStatus">Payment Status</option>
-                        <option value="todo">To Do</option>
+                    <select className="my-2 mb-sm" onChange={handleSortChange}>
+                        <optgroup label="Date">
+                            <option value="date">Date</option>
+                        </optgroup>
+                        <optgroup label="Service Status">
+                            <option value="serviceStatus:pending">Service Status: Pending</option>
+                            <option value="serviceStatus:accepted">Service Status: Accepted</option>
+                            <option value="serviceStatus:delivered">Service Status: Delivered</option>
+                            <option value="serviceStatus:complete">Service Status: Complete</option>
+                        </optgroup>
+                        <optgroup label="Payment Status">
+                            <option value="paymentStatus:due">Payment Status: Due</option>
+                            <option value="paymentStatus:paid">Payment Status: Paid</option>
+                        </optgroup>
                     </select>
                 </div>
                 
@@ -102,7 +186,7 @@ const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
                             
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
-                            <p><strong>Data Submitted: </strong>{job.createdAt ? job.createdAt : "N/A"}</p>
+                            <p><strong>Data Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
                             <a className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
                             <div className={expandedCards[job.id] === true ? 'show' : 'hide'}>
                                 <b>Services Requested:</b>
@@ -117,7 +201,7 @@ const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
                                 <p><strong>Confirmed Delivery Date: </strong>{job.confirmed_delivery_date}</p>
                                 <p><strong>Notes: </strong>"{job.notes}"</p>
                                 <p><strong>Price: </strong>${job.price.toFixed(2)}</p>
-                                <p><strong>Payment Collected: </strong>{job.payment_collected ? 'Yes' : 'No'}</p>
+                                <p><strong>Payment Collected: </strong><strong className={job.payment_collected ? 'color-status-true' : 'color-status-false'}>{job.payment_collected ? 'Yes' : 'No'}</strong></p>
                                 <div className="flex align-center">
                                     <b className="mr-sm">Order Status: </b>
                                 {orderStatus.map((status, index) => (

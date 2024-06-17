@@ -5,6 +5,9 @@ import React, { useEffect, useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { start } from 'repl';
 import { getSessionService } from '../services/sessionService';
+import { doc, getDoc, DocumentData } from "firebase/firestore";
+import { db } from '../config/firebase';
+
 
 type pdpProps = {
     title: string,
@@ -18,6 +21,7 @@ type pdpProps = {
     startingLocation: string,
     setNumOfCartItems?: any
 }
+  
 
 const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation, setNumOfCartItems}: pdpProps) => {
 
@@ -30,7 +34,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
 
     const [ showModal, setShowModal ] = useState(false);
 
-    const appliances = ["Refrigerator", "Range", "Stove", "Oven", "Microwave", "Dishwasher", "Washer", "Dryer", "Wine Cooler", "Ice Maker", "Freezer", "Trash Compactor", "Garbage Disposal", "Vent Hood"]
+
     const locations = [
         {
             name: "curb",
@@ -79,9 +83,6 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                 
             }));
         }
-
-
-        // todo check if is haul away pdp or install and switch logic
     }
 
     const selectAppliance = (appliance: string) => {
@@ -187,7 +188,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
 
                     )}
 
-                    <button onClick={addToCart}>Add to Cart</button>
+                    <button className="my-sm" onClick={addToCart}>Add to Cart</button>
                 </div>
                 
             </div>

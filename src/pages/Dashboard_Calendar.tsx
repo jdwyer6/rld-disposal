@@ -2,7 +2,7 @@ import DashboardNav from "../components/dashboardNav";
 
 const Dashboard_Calendar = () => {
     return (
-        <div className="flex">
+        <div className="flex container my-md">
             <div className="flex-1 dashboard-left-nav">
                 <DashboardNav />
             </div>

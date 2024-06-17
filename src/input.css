@@ -99,6 +99,8 @@
    --color-status-1: rgb(224, 142, 48);
    --color-status-2: #388e3c;
    --color-status-3: var(--primary);
+   --color-status-true: var(--color-status-2);
+   --color-status-false: var(--color-status-0);
    --secondary: hsl(205, 25%, 41%);
    --secondary-hover: hsl(205, 30%, 32%);
    --secondary-focus: rgba(78, 109, 131, 0.125);
@@ -784,6 +786,14 @@ nav {
 .color-status-accepted {color: var(--primary-color);}
 .color-status-delivered {color: #12cdda;}
 .color-status-complete {color: #115E59;}
+
+.color-status-true {
+    color: var(--color-status-true);
+}
+
+.color-status-false {
+    color: var(--color-status-false);
+}
 
 .brand-text {
     margin-left: 8px;
