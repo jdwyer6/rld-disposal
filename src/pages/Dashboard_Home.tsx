@@ -6,18 +6,24 @@ import { useState, useEffect } from "react";
 import { MotionConfig } from "framer-motion";
 import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faPlus, faHouse, faCalendar, faList } from '@fortawesome/free-solid-svg-icons';
+import { faEdit} from '@fortawesome/free-solid-svg-icons';
 import { db } from '../config/firebase';
-import { getDoc, getDocs, collection, Timestamp } from 'firebase/firestore';
+import { getDoc, getDocs, collection, Timestamp, doc, updateDoc } from 'firebase/firestore';
 import DashboardNav from "../components/dashboardNav";
 
 type Job = {
     id: string;
     first_name?: string;
     last_name?: string;
+    phone?: string;
     createdAt?: Timestamp;
     orderStatus?: number;
     payment_collected?: boolean; 
+    services?: Array<{ service: string, appliance: string, location: string }>;
+    preferred_delivery_date?: { day: string, time: string };
+    confirmed_delivery_date?: string;
+    notes?: string;
+    price?: number;
 };
 
 const Dashboard_Home = () => {
@@ -30,6 +36,8 @@ const Dashboard_Home = () => {
     const [ showFullCard, setShowFullCard ] = useState(false);
     const [expandedCards, setExpandedCards] = useState<{ [key: number]: boolean }>({});
     const [searchInput, setSearchInput] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [selectedJob, setSelectedJob] = useState<Job | null>(null);
 
     const getJobs = async () => {
     
@@ -143,6 +151,32 @@ const Dashboard_Home = () => {
         console.log('Sort Option Changed: ', value);
         setSortOption(value);
     };
+
+    const toggleModal = (job: Job) => {
+        setSelectedJob(job);
+        setShowModal(true);
+        console.log("Show Modal: ", showModal);
+        console.log("Selected Job: ", selectedJob);
+    };
+
+    const handleModalClose = () => {
+        setShowModal(false);
+        setSelectedJob(null);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setSelectedJob(prevJob => prevJob ? { ...prevJob, [name]: value } : null);
+    };
+
+    const handleSave = async () => {
+        if (selectedJob) {
+            const jobDoc = doc(db, 'jobs', selectedJob.id);
+            await updateDoc(jobDoc, selectedJob);
+            setShowModal(false);
+            getJobs(); // Refresh jobs after saving
+        }
+    };
                     
     return ( 
         
@@ -151,7 +185,7 @@ const Dashboard_Home = () => {
                 <DashboardNav />
             </div>
             
-            <div className="flex-6">
+            <div className="flex-6 relative">
                 <h2>Orders</h2>
                 <input
                 className="mb-sm"
@@ -182,12 +216,12 @@ const Dashboard_Home = () => {
                 
                 <div>
                     {filteredJobs.map((job: any, index) => (
-                        <div key={index} className={`order-card border-status-${job.orderStatus}`} onClick={()=>toggleCard(job.id)}>
-                            
+                        <div key={index} className={`order-card border-status-${job.orderStatus}`} >
+                            <div className="order-card-edit" onClick={() => toggleModal(job)}><FontAwesomeIcon icon={faEdit} /> </div>
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
                             <p><strong>Data Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
-                            <a className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
+                            <a onClick={()=>toggleCard(job.id)} className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
                             <div className={expandedCards[job.id] === true ? 'show' : 'hide'}>
                                 <b>Services Requested:</b>
                                 <ul>
@@ -209,14 +243,76 @@ const Dashboard_Home = () => {
                                 ))}
                                 </div>
                                 <p><strong>Order Status: </strong>{orderStatus[job.orderStatus]}</p>
+                                <a onClick={()=>toggleCard(job.id)} className={expandedCards[job.id] === false ? 'hide' : 'show'}>Click to Collapse</a>
                             </div>
 
                         </div>
                     ))}
                 </div>
+
+       
+
+                {showModal && selectedJob && (
+                    <div className="modal">
+                        <div className="modal-content">
+                            <span className="close" onClick={handleModalClose}>&times;</span>
+                            <h2>Edit Job</h2>
+                            <form>
+                                <label>First Name:</label>
+                                <input type="text" name="first_name" value={selectedJob.first_name || ''} onChange={handleInputChange} />
+
+                                <label>Last Name:</label>
+                                <input type="text" name="last_name" value={selectedJob.last_name || ''} onChange={handleInputChange} />
+
+                                <label>Phone:</label>
+                                <input type="text" name="phone" value={selectedJob.phone || ''} onChange={handleInputChange} />
+
+                                <label>Services:</label>
+                                {selectedJob.services?.map((service, index) => (
+                                    <div key={index}>
+                                        <input type="text" name={`services[${index}].service`} value={service.service} onChange={handleInputChange} />
+                                        <input type="text" name={`services[${index}].appliance`} value={service.appliance} onChange={handleInputChange} />
+                                        <input type="text" name={`services[${index}].location`} value={service.location} onChange={handleInputChange} />
+                                    </div>
+                                ))}
+
+                                <label>Preferred Delivery Date:</label>
+                                <input type="text" name="preferred_delivery_date.day" value={selectedJob.preferred_delivery_date?.day || ''} onChange={handleInputChange} />
+                                <input type="text" name="preferred_delivery_date.time" value={selectedJob.preferred_delivery_date?.time || ''} onChange={handleInputChange} />
+
+                                <label>Confirmed Delivery Date:</label>
+                                <input type="text" name="confirmed_delivery_date" value={selectedJob.confirmed_delivery_date || ''} onChange={handleInputChange} />
+
+                                <label>Notes:</label>
+                                <textarea name="notes" value={selectedJob.notes || ''} onChange={handleInputChange}></textarea>
+
+                                <label>Price:</label>
+                                <input type="number" name="price" value={selectedJob.price || ''} onChange={handleInputChange} />
+
+                                <label>Payment Collected:</label>
+                                <select name="payment_collected" value={selectedJob.payment_collected ? 'true' : 'false'} onChange={handleInputChange}>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+
+                                <label>Order Status:</label>
+                                <select name="orderStatus" value={selectedJob.orderStatus || 0} onChange={handleInputChange}>
+                                    {orderStatus.map((status, index) => (
+                                        <option key={index} value={index}>{status}</option>
+                                    ))}
+                                </select>
+
+                                <button type="button" onClick={handleSave}>Save</button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+
+
             </div>
         </div>
      );
 }
- 
+
 export default Dashboard_Home;
