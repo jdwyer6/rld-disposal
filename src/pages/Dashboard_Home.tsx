@@ -167,10 +167,14 @@ const Dashboard_Home = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setSelectedJob(prevJob => prevJob ? { ...prevJob, [name]: value } : null);
+        
     };
 
     const handleSave = async () => {
         if (selectedJob) {
+            if (typeof selectedJob.price === 'string') {
+                selectedJob.price = parseFloat(selectedJob.price);
+            }
             const jobDoc = doc(db, 'jobs', selectedJob.id);
             await updateDoc(jobDoc, selectedJob);
             setShowModal(false);
@@ -253,28 +257,49 @@ const Dashboard_Home = () => {
        
 
                 {showModal && selectedJob && (
-                    <div className="modal">
-                        <div className="modal-content">
+                    <div className="rld-modal">
+                        <div className="rld-modal-content">
                             <span className="close" onClick={handleModalClose}>&times;</span>
                             <h2>Edit Job</h2>
                             <form>
-                                <label>First Name:</label>
-                                <input type="text" name="first_name" value={selectedJob.first_name || ''} onChange={handleInputChange} />
+                                <div className="bg-light padding-sm">
+                                    <h3>Customer Information</h3>
+                                    <label>First Name:</label>
+                                    <input type="text" name="first_name" value={selectedJob.first_name || ''} onChange={handleInputChange} />
 
-                                <label>Last Name:</label>
-                                <input type="text" name="last_name" value={selectedJob.last_name || ''} onChange={handleInputChange} />
+                                    <label>Last Name:</label>
+                                    <input type="text" name="last_name" value={selectedJob.last_name || ''} onChange={handleInputChange} />
 
-                                <label>Phone:</label>
-                                <input type="text" name="phone" value={selectedJob.phone || ''} onChange={handleInputChange} />
+                                    <label>Phone:</label>
+                                    <input type="text" name="phone" value={selectedJob.phone || ''} onChange={handleInputChange} />
+                                </div>
+                                
 
-                                <label>Services:</label>
-                                {selectedJob.services?.map((service, index) => (
-                                    <div key={index}>
-                                        <input type="text" name={`services[${index}].service`} value={service.service} onChange={handleInputChange} />
-                                        <input type="text" name={`services[${index}].appliance`} value={service.appliance} onChange={handleInputChange} />
-                                        <input type="text" name={`services[${index}].location`} value={service.location} onChange={handleInputChange} />
-                                    </div>
-                                ))}
+                                <div className="bg-light padding-sm">
+                                    <h3>Services:</h3>
+                                    {selectedJob.services?.map((service, index) => (
+                                        <div key={index}>
+                                            <strong>Service {index + 1}</strong><br/>
+                                            <small>Type</small>
+                                            {/* <input type="text" name={`services[${index}].service`} value={service.service} onChange={handleInputChange} /> */}
+                                            <select name={`services[${index}].service`} value={service.service} onChange={handleInputChange}>
+                                                <option value="install">Install</option>
+                                                <option value="haulAway">Haul Away</option>
+                                            </select>
+                                            <small>Appliance:</small>
+                                            <input type="text" name={`services[${index}].appliance`} value={service.appliance} onChange={handleInputChange} />
+                                            {service.location && (
+                                                <>
+                                                    <small>Location:</small>
+                                                    <input type="text" name={`services[${index}].location`} value={service.location} onChange={handleInputChange} />
+                                                </>
+        
+                                            )}
+                        
+                                        </div>
+                                    ))}
+                                </div>
+                                
 
                                 <label>Preferred Delivery Date:</label>
                                 <input type="text" name="preferred_delivery_date.day" value={selectedJob.preferred_delivery_date?.day || ''} onChange={handleInputChange} />
@@ -294,6 +319,9 @@ const Dashboard_Home = () => {
                                     <option value="true">Yes</option>
                                     <option value="false">No</option>
                                 </select>
+
+                        
+
 
                                 <label>Order Status:</label>
                                 <select name="orderStatus" value={selectedJob.orderStatus || 0} onChange={handleInputChange}>

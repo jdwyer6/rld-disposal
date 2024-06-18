@@ -113,6 +113,11 @@
    --mark-color: #513b29;
    --ins-color: #388e3c;
    --del-color: #c62828;
+   --lighter: rgb(252, 252, 252);
+   --light: rgb(219, 219, 219);
+   --neutral: gray;
+   --dark: rgb(119, 119, 119);
+   --darker: rgb(44, 44, 44);
    --blockquote-border-color: var(--muted-border-color);
    --blockquote-footer-color: var(--muted-color);
    --button-box-shadow: 0 0.0625rem 0.1875rem rgba(23, 41, 54, 0.1),
@@ -365,6 +370,10 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 
+small {
+    margin-bottom: 0;
+}
+
 section {
     border: 1px solid var(--form-element-border-color);
     padding: 64px;
@@ -570,7 +579,7 @@ nav {
     z-index: 20;
 }
 
-.modal {
+.rld-modal {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -585,13 +594,14 @@ nav {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
-    background-color: #fefefe;
+.rld-modal-content {
+    background-color: #ffffff;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    max-width: 500px;
+    max-width: 800px;
+    margin-top: 100px;
 }
 
 .close {
@@ -838,9 +848,49 @@ nav {
     
 }
 
+.padding-sm {
+    padding: 1.5rem;
+}
+
+.padding-md {
+    padding: 3rem;
+}
+
+.padding-lg {
+    padding: 5rem;
+}
+
 .bg-image {
     position: absolute;
     width: 100%;
+}
+
+.bg-ligher {
+    background-color: var(--lighter);
+}
+
+.bg-light {
+    background-color: var(--light);
+}
+
+.bg-neutral {
+    background-color: var(--neutral);
+}
+
+.bg-dark {
+    background-color: var(--dark);
+}
+
+.bg-darker {
+    background-color: var(--darker);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
 }
 
 .icon-large {
