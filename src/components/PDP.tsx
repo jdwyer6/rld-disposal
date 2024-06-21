@@ -193,21 +193,24 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                 
             </div>
 
-                    {showModal ? (
-                        <div className="added-to-cart-modal">
-                            <h1>Thanks for selecting a service</h1>
-                            <p className="text-center">What would you like to do now?</p>
-                            <div className="btn-container">
-                                <Link to="/services" className="flex-1">
-                                    <button className="btn-secondary me-2">Add another service or appliance</button>
-                                </Link>
-                                <Link to="/cart" className="flex-1">
-                                    <button className="ms-2">Finalize and submit</button>
-                                </Link>
-                                
-                            </div>
+            {showModal ? (
+                <div className="added-to-cart-modal">
+                    <div className="added-to-cart-modal-content">
+                        <h1>Thanks for selecting a service</h1>
+                        <p className="text-center">What would you like to do now?</p>
+                        <div className="btn-container">
+                            <Link to="/services" className="flex-1">
+                                <button className="btn-secondary me-2">Add another service or appliance</button>
+                            </Link>
+                            <Link to="/cart" className="flex-1">
+                                <button className="ms-2">Finalize and submit</button>
+                            </Link>
+                            
                         </div>
-                    ) : ''}
+                    </div>
+
+                </div>
+            ) : ''}
 
 
 

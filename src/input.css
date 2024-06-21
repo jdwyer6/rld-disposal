@@ -988,7 +988,7 @@ button, a {
     }
 }
 
-.added-to-cart-modal {
+.added-to-cart-modal-content {
     background-color: white;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
     padding: 80px 40px;
@@ -997,6 +997,19 @@ button, a {
     left: 50%;
     transform: translateX(-50%);
     width: 50vw;
+}
+
+.added-to-cart-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .cart-item-icon {

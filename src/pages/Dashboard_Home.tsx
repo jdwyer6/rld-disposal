@@ -224,7 +224,7 @@ const Dashboard_Home = () => {
                             <div className="order-card-edit" onClick={() => toggleModal(job)}><FontAwesomeIcon icon={faEdit} /> </div>
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
-                            <p><strong>Data Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
+                            <p><strong>Date Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
                             <a onClick={()=>toggleCard(job.id)} className={expandedCards[job.id] === true ? 'hide' : 'show'}>Click to expand</a>
                             <div className={expandedCards[job.id] === true ? 'show' : 'hide'}>
                                 <b>Services Requested:</b>
@@ -282,7 +282,7 @@ const Dashboard_Home = () => {
                                             <strong>Service {index + 1}</strong><br/>
                                             <small>Type</small>
                                             {/* <input type="text" name={`services[${index}].service`} value={service.service} onChange={handleInputChange} /> */}
-                                            <select name={`services[${index}].service`} value={service.service} onChange={handleInputChange}>
+                                            <select name={`services[${index}]`} value={service.service} onChange={handleInputChange} className="mb-sm">
                                                 <option value="install">Install</option>
                                                 <option value="haulAway">Haul Away</option>
                                             </select>

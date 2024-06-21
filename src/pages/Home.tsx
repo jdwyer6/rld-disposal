@@ -1,16 +1,53 @@
-import homePhoto from '../images/kitchen.jpg';
 import cardSchedule from '../images/cardSchedule.jpg';
 import cardLearnMore from '../images/cardLearnMore.jpg';
 import {TbHomeOff, TbTrash, TbTruckDelivery} from 'react-icons/tb';
 import Card from '../components/card';
 import {Link} from 'react-router-dom';
+import { db } from '../config/firebase';
+import { doc, getDoc } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+
 
 const Home = () => {
+    const [isSiteOff, setIsSiteOff] = useState(false);
+    async function fetchEmergencyShutOff() {
+        // Ensure the environment variable is defined
+        const docId = process.env.REACT_APP_ADMIN_PREFS_DOC;
+        if (!docId) {
+          console.error("The document ID is not defined in environment variables.");
+          return;
+        }
+      
+        const docRef = doc(db, "admin_prefs", docId); 
+        try {
+          const docSnap = await getDoc(docRef); 
+      
+          if (docSnap.exists()) {
+            const data = docSnap.data(); 
+            const emergencyShutOff = data.emergency_shut_off; 
+            setIsSiteOff(emergencyShutOff);
+          } else {
+            console.log("No such document!"); 
+          }
+        } catch (error) {
+          console.error("Error fetching document:", error); 
+        }
+    }
+
+    useEffect(() => {
+        fetchEmergencyShutOff();
+    }, []); 
+
+    if (isSiteOff) {
+        return (
+            <div className="container flex justify-center">
+                <p className="text-center my-lg">Apologies for the inconvenience! Our services are receiving an unusually high volume of requests and we do not currently have availability. Please check back later.</p>
+            </div>
+        ); 
+    }
 
     return ( 
         <div className="flex flex-col">
-
-
             <div className="hero overlay flex align-center justify-center">
                 <div className="content w-50">
                     <h1 className="text-white text-center hero-text">Don't know what to do with your appliances?</h1>

@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import DashboardNav from '../components/dashboardNav';
-// Import Bootstrap CSS in case it's not globally imported
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { db } from '../config/firebase';
+import { updateDoc, doc, getDoc } from 'firebase/firestore';
 
 const ShutOff = () => {
     // State to manage toggle
     const [isToggled, setIsToggled] = useState(false);
+    const adminPrefsDoc = process.env.REACT_APP_ADMIN_PREFS_DOC || "defaultDocId";
 
-    // Function to toggle the state
-    const toggle = () => setIsToggled(!isToggled);
-    console.log(isToggled);
+    const toggle = async () => {
+        const newToggleState = !isToggled;
+        setIsToggled(newToggleState);
+
+        const docRef = doc(db, "admin_prefs", adminPrefsDoc);
+        try {
+            await updateDoc(docRef, {
+                emergency_shut_off: newToggleState
+            });
+            const toggleMessage = newToggleState ? "OFF" : "ON";
+            alert(`Admin Prefs Successfully Updated. Your site is now ${toggleMessage}.`);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            alert("Error updating document. Please try again.");
+        }
+    };
+
+    useEffect(() => {
+        const fetchToggleState = async () => {
+            const docRef = doc(db, "admin_prefs", adminPrefsDoc);
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    setIsToggled(docSnap.data().emergency_shut_off);
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.error("Error fetching document: ", error);
+            }
+        };
+
+        fetchToggleState();
+    }, [adminPrefsDoc]);
 
     return (
         <>

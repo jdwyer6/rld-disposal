@@ -9,6 +9,7 @@ type MessageModalProps = {
 const MessageModal = ({ modalIsOpen, message }: MessageModalProps) => {
     return (
         <div className={`${modalIsOpen ? "show" : "hide"} modal-container`}>
+            <div className="modal-bg"></div>
             <p>{message}</p>
         </div>
     );
