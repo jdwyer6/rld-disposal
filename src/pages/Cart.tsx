@@ -14,11 +14,16 @@ type cartProps = {
     setNumOfCartItems: any
 }
 
+interface Service {
+    price: number;
+}
+
 
 const Cart  = ({setNumOfCartItems}: cartProps) => {
     const servicesData = sessionStorage.getItem('services');
     const [services, setServices] = useState(JSON.parse(servicesData ? servicesData : '[]'));
     const navigate = useNavigate();
+    const [ price, setPrice ] = useState(0);
 
     const [jobInfo, setJobInfo] = useState({
         services: services,
@@ -78,6 +83,9 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         // Update the number of cart items in the navigation bar
         const newServices = sessionStorage.getItem('services');
         setNumOfCartItems(newServices ? JSON.parse(newServices).length : 0);
+
+        setServices(updatedCartItems);
+        setPrice(calculatePrice(updatedCartItems));
     };
 
     const handleFirstNameChange = (event: any) => {
@@ -202,6 +210,17 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }
     };
 
+    const calculatePrice = (services: Service[]) => {
+        const totalPrice = services.reduce((acc, currentService) => {
+            return acc + currentService.price;
+        }, 0);
+        return totalPrice;
+    }
+
+    useEffect(() => {
+        setPrice(calculatePrice(services));
+    }, [services]);
+
     if (services.length === 0) return (<div className="container flex flex-col my-lg text-center"><p>Your cart is empty. Click <Link to="/services">here</Link> to schedule a service.</p></div>);
     
 
@@ -232,7 +251,14 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
                         </div>
                     )
                 })}
+
+                <div className="flex justify-end">
+                    <strong className="mr-sm">Estimated Total:</strong>
+                    <strong>${price}</strong>
+                </div>
             </div>
+
+
             
 
              {/* ---------------Contact Information--------------- */}

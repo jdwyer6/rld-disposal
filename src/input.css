@@ -523,6 +523,10 @@ nav {
     justify-content: space-around;
 }
 
+.justify-end {
+    justify-content: flex-end;
+}
+
 .align-top {
     align-items: flex-start;
 }

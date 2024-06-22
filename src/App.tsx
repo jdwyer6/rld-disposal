@@ -14,6 +14,8 @@ import ShutOff from './pages/Shut-Off';
 import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
+import Login from './pages/Login';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const [ jobInfo, setJobInfo ] = useState({
@@ -57,9 +59,12 @@ function App() {
           <Route path="/cart" element={<Cart setNumOfCartItems={setNumOfCartItems} />} />
           <Route path="/schedule" element={<Schedule />}/>
           <Route path="/thankyou" element={<ThankYou />} />
-          <Route path="/admin" element={<Dashboard_Home />} />
+          {/* <Route path="/admin" element={<Dashboard_Home />} /> */}
           <Route path="/admin/calendar" element={<Dashboard_Calendar />} />
           <Route path="/admin/shutoff" element={<ShutOff />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<ProtectedRoute><Dashboard_Home /></ProtectedRoute>} />
+
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>
