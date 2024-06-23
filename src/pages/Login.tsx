@@ -7,7 +7,7 @@ import MessageModal from '../components/MessageModal';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(true);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const handleSignIn = async () => {
     try {

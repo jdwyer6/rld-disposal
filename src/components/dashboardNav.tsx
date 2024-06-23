@@ -9,7 +9,7 @@ const DashboardNav = () => {
                 <li className="mb-4"><Link to="/admin"><FontAwesomeIcon className="mr-4" icon={faHouse} /> Home</Link></li>
                 <li className="mb-4"><a><FontAwesomeIcon icon={faPlus} className="mr-4" /> Create</a></li>
                 <li className="mb-4"><Link to="/admin/calendar"><FontAwesomeIcon className="mr-4" icon={faCalendar} /> Calendar</Link></li>
-                <li className="mb-4"><a><FontAwesomeIcon className="mr-4" icon={faList} /> Services</a></li>
+                <li className="mb-4"><Link to="/admin/services"><FontAwesomeIcon className="mr-4" icon={faList} /> Pricing</Link></li>
                 <li className="mb-4"><Link to="/admin/shutoff"><FontAwesomeIcon className="mr-4" icon={faPowerOff} /> Emergency Shut Off</Link></li>
             </ul>
         </div>

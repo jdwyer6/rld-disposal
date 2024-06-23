@@ -1,5 +1,8 @@
 import { db } from "../config/firebase";
-import { doc, getDoc } from "firebase/firestore"; // Assuming you're using Firebase v9+
+import { doc, getDoc, setDoc } from "firebase/firestore"; // Assuming you're using Firebase v9+
+
+type PricesType = { [category: string]: { [key: string]: number } };
+
 
 /**
  * Fetches appliance prices from the Firestore database.
@@ -32,4 +35,19 @@ async function getPrices(): Promise<{ [key: string]: number } | null> {
     }
 }
 
-export { getPrices };
+/**
+ * Saves appliance prices to the Firestore database.
+ * @param prices - The prices object to be saved.
+ */
+async function savePrices(prices: PricesType): Promise<void> {
+    try {
+        const docId = process.env.REACT_APP_ADMIN_PREFS_DOC || "defaultDocId";
+        const docRef = doc(db, "admin_prefs", docId);
+        await setDoc(docRef, { prices }, { merge: true });
+        console.log('Prices updated successfully!');
+    } catch (error) {
+        console.error('Error saving prices:', error);
+    }
+}
+
+export { getPrices, savePrices };

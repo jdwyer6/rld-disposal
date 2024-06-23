@@ -11,11 +11,13 @@ import Dashboard_Home from './pages/Dashboard_Home';
 import Dashboard_Calendar from './pages/Dashboard_Calendar';
 import ThankYou from './pages/Thank-You';
 import ShutOff from './pages/Shut-Off';
+import Dashboard_Services from './pages/Dashboard_Services';
 import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import Login from './pages/Login';
 import ProtectedRoute from './components/ProtectedRoute';
+
 
 function App() {
   const [ jobInfo, setJobInfo ] = useState({
@@ -64,7 +66,7 @@ function App() {
           <Route path="/admin/shutoff" element={<ShutOff />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<ProtectedRoute><Dashboard_Home /></ProtectedRoute>} />
-
+          <Route path="/admin/services" element={<ProtectedRoute><Dashboard_Services /></ProtectedRoute>} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

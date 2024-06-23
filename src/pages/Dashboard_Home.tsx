@@ -374,7 +374,7 @@ const Dashboard_Home = () => {
                             >
                                 <FontAwesomeIcon icon={faEdit} />{" "}
                             </div>
-                            <div onClick={()=>handleClickAcknowledgeRequest(job)}>{job.requestSeen ?? false ? "" : (<button className="btn-acknowledge">ACKNOWLEDGE REQUEST!</button>)}</div>
+                            <div onClick={()=>handleClickAcknowledgeRequest(job)}>{job.requestSeen ?? false ? "" : (<button className="btn-acknowledge">ACKNOWLEDGE REQUEST</button>)}</div>
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
                             <p><strong>Date Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>

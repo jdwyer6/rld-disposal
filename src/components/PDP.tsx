@@ -7,6 +7,7 @@ import { start } from 'repl';
 import { getSessionService } from '../services/sessionService';
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from '../config/firebase';
+import { getPrices } from '../services/adminPrefsService';
 
 
 type pdpProps = {
@@ -21,9 +22,11 @@ type pdpProps = {
     startingLocation: string,
     setNumOfCartItems?: any
 }
-  
+
+type PricesType = { [category: string]: { [key: string]: number } } | null;
 
 const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation, setNumOfCartItems}: pdpProps) => {
+    const [dbPrices, setDbPrices] = useState<{ [category: string]: { [key: string]: number } } | null>(null);
 
     const [currentServices, setCurrentServices] = useState({
             service: service,
@@ -33,6 +36,15 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
     })
 
     const [ showModal, setShowModal ] = useState(false);
+
+    useEffect(() => {
+        const fetchPrices = async () => {
+            const pricesData = await getPrices();
+            setDbPrices(pricesData as PricesType);
+        };
+        fetchPrices();
+        console.log(dbPrices)
+    }, []);
 
 
     const locations = [
@@ -50,13 +62,30 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
         }
     ];
 
+    // const prices = {
+    //     "haulAway": {
+    //         "curb": 50,
+    //         "inside" : 90,
+    //         "inside-uninstalled" : 65
+    //     },
+    //     "install": {
+    //         "refrigerator": 40,
+    //         "range": 60,
+    //         "washer": 50,
+    //         "dryer": 80,
+    //         "dishwasher": 10,
+    //         "cooktop": 20,
+    //         "microwave": 40
+    //     }
+    // }
+
     const prices = {
-        "haulAway": {
+        "haulAway": dbPrices?.haulAway || {
             "curb": 50,
             "inside" : 90,
             "inside-uninstalled" : 65
         },
-        "install": {
+        "install": dbPrices?.install || {
             "refrigerator": 40,
             "range": 60,
             "washer": 50,
@@ -64,6 +93,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             "dishwasher": 10,
             "cooktop": 20,
             "microwave": 40
+        
         }
     }
 
@@ -148,7 +178,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                         <h1>${currentServices.price}</h1>
                     <hr></hr>
                     <strong>Select an appliance</strong>
-                    <div className='flex flex-wrap justify-center appliance-selection-container'>
+                    {/* <div className='flex flex-wrap justify-center appliance-selection-container'>
                         <button className={`btn-secondary my-1 ${currentServices.appliance === "refrigerator" ? 'selected' : ''}`} onClick={() => selectAppliance("refrigerator")}>
                             <span>Refrigerator</span>
                         </button>
@@ -170,6 +200,17 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                         <button className={`btn-secondary my-1 ${currentServices.appliance === "microwave" ? 'selected' : ''}`} onClick={()=>selectAppliance("microwave")}>
                             <span>Microwave</span>
                         </button>
+                    </div> */}
+                  <div className='flex flex-wrap justify-center appliance-selection-container'>
+                        {dbPrices && Object.keys(dbPrices.install).map((appliance) => (
+                            <button
+                                key={appliance}
+                                className={`btn-secondary my-1 ${currentServices.appliance === appliance ? 'selected' : ''}`}
+                                onClick={() => selectAppliance(appliance)}
+                            >
+                                <span>{appliance.charAt(0).toUpperCase() + appliance.slice(1)}</span>
+                            </button>
+                        ))}
                     </div>
                     
                     {showApplianceLocationDropdown && (
