@@ -447,9 +447,10 @@ nav {
 
 .btn-acknowledge {
     color: white;
+    font-size: 16px;
     background-color: var(--color-status-0);
     border: var(--color-status-0);
-    width: 95%;
+    width: 250px;
 
     &:hover {
         background-color: var(--color-status-2);
@@ -1077,5 +1078,5 @@ button, a {
     right: 0;
     background-color: var(--color-status-0);
     color: white;
-    padding: 4px 8px;
+    padding: 10px 25px;
 }

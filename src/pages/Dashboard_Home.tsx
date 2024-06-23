@@ -321,7 +321,7 @@ const Dashboard_Home = () => {
             <div className="flex-6 relative">
                 <div>
                     <h2>Orders</h2>
-                    <div className="unacknowledged-requests-notification">{unacknowledgedRequests} unacknowledged</div>
+                    {unacknowledgedRequests > 0 ? (<div className="unacknowledged-requests-notification">{unacknowledgedRequests} unacknowledged</div>) : null}
                 </div>
                 <input
                     className="mb-sm"

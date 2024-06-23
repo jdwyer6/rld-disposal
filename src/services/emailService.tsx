@@ -6,19 +6,19 @@ interface EmailProps {
     firstName: string;
     email: string;
     price: string;
+    jobInfo: any;
 }
 
-const SendConfirmationEmail = ({templateId, firstName, email, price}: EmailProps) => {
+const SendConfirmationEmail = ({templateId, firstName, email, price, jobInfo}: EmailProps) => {
     const serviceID = process.env.REACT_APP_EMAIL_SERVICE_ID || '';
     const publicKey = process.env.REACT_APP_EMAIL_PUBLIC_KEY || '';
 
     const templateParams = {
         to_name: firstName,
         to_email: email,
-        price: price
+        price: price,
+        jobInfo: JSON.stringify(jobInfo)
     };
-
-    console.log("templateParams: ", templateParams)
 
     emailjs.send(serviceID, templateId, templateParams, publicKey)
         .then(

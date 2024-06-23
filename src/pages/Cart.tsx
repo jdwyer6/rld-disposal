@@ -205,7 +205,6 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         return DOMPurify.sanitize(input);
     }
 
-
     const onSubmit = async () => {
         try {
             const jobInfoWithTimestamp = {
@@ -217,7 +216,10 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
 
             await addDoc(jobsCollectionRef, jobInfoWithTimestamp);
  
-            SendConfirmationEmail({templateId: 'template_gu3y7jd', firstName: jobInfo.first_name, email: jobInfo.email, price: price.toString()});
+            //********Send Emails */
+            SendConfirmationEmail({templateId: 'template_gu3y7jd', firstName: jobInfo.first_name, email: jobInfo.email, price: price.toString(), jobInfo: jobInfoWithTimestamp});
+            SendConfirmationEmail({templateId: 'template_og8te1h', firstName: "Tim", email: process.env.REACT_APP_ADMIN_EMAIL_1 || '', price: price.toString(), jobInfo: jobInfoWithTimestamp});
+            SendConfirmationEmail({templateId: 'template_og8te1h', firstName: "Jake", email: process.env.REACT_APP_ADMIN_EMAIL_2 || '', price: price.toString(), jobInfo: jobInfoWithTimestamp});
 
             sessionStorage.removeItem('services');
             setNumOfCartItems(0);
