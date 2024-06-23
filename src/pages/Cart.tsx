@@ -9,6 +9,8 @@ import DOMPurify from 'dompurify';
 import { db } from '../config/firebase';
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import { SendConfirmationEmail } from '../services/emailService';
+
 
 type cartProps = {
     setNumOfCartItems: any
@@ -25,6 +27,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
     const navigate = useNavigate();
     const [ price, setPrice ] = useState(0);
 
+
     const [jobInfo, setJobInfo] = useState({
         services: services,
         preferred_delivery_date: {
@@ -36,6 +39,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         first_name: "",
         last_name: "",
         phone: "",
+        email: "",
         confirmed_delivery_date: "",
         payment_collected: false,
         orderStatus: 0,
@@ -57,6 +61,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
                 return '';
         }
     }
+
+
 
     const capitalizeFirstLetter = (string: string) => {
         if (!string) return '';
@@ -109,6 +115,12 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }));
     };
 
+    const handleEmailChange = (event: any) => {
+        setJobInfo((prevState: typeof jobInfo) => ({
+            ...prevState,
+            email: event.target.value
+        }));
+    };
 
     const handleNotesChange = (event: any) => {
         setJobInfo((prevState: typeof jobInfo)  => ({
@@ -166,12 +178,14 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         jobInfo.first_name = sanitizeInput(jobInfo.first_name);
         jobInfo.last_name = sanitizeInput(jobInfo.last_name);
         jobInfo.phone = sanitizeInput(jobInfo.phone);
+        jobInfo.email = sanitizeInput(jobInfo.email);
         jobInfo.notes = sanitizeInput(jobInfo.notes);
     
         // Check for empty or null strings
         if (!jobInfo.first_name) issues.push(<li>First name is missing.</li>);
         if (!jobInfo.last_name) issues.push(<li>Last name is missing.</li>);
         if (!jobInfo.phone) issues.push(<li>Phone number is missing.</li>);
+        if (!jobInfo.email) issues.push(<li>Email is missing.</li>);
     
         // Check if preferred_delivery_date is an empty object
         if (!jobInfo.preferred_delivery_date.time) issues.push(<li>Preferred delivery time is missing.</li>);
@@ -197,9 +211,14 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
             const jobInfoWithTimestamp = {
                 ...jobInfo,
                 createdAt: serverTimestamp(),
+                price: price,
+                requestSeen: false
             };
 
             await addDoc(jobsCollectionRef, jobInfoWithTimestamp);
+ 
+            SendConfirmationEmail({templateId: 'template_gu3y7jd', firstName: jobInfo.first_name, email: jobInfo.email, price: price.toString()});
+
             sessionStorage.removeItem('services');
             setNumOfCartItems(0);
             navigate('/thankyou');
@@ -271,7 +290,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
                 <input type="text" id="lastName" name="lastName" placeholder="Last Name" required onChange={handleLastNameChange} value={jobInfo.last_name} />
                 <label htmlFor="phone">Phone Number</label>
                 <input type="text" id="phone" name="phone" placeholder="Phone Number" required onChange={handlePhoneChange}/>
-
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email" required onChange={handleEmailChange} value={jobInfo.email} />
                 
             </div>
 
@@ -356,7 +376,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
                     {validateJobInfo(jobInfo)}
                 </ul>
             </div>
-            <button disabled={validateJobInfo(jobInfo).length > 0} onClick={onSubmit}>Submit</button>
+            <button className="mb-lg" disabled={validateJobInfo(jobInfo).length > 0} onClick={onSubmit}>Submit</button>
         </div>
     );
 }

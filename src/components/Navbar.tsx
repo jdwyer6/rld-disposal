@@ -40,7 +40,7 @@ const Navigation = ({numOfCartItems, setNumOfCartItems}: cartProps) => {
                     <Navbar.Collapse id="responsive-navbar-nav" className="d-flex justify-content-end">
                         <Nav className="mr-auto">
                             <Nav.Link href="/" className="me-2 shadow-none">Home</Nav.Link>
-                            <Nav.Link href="/about" className="me-2 shadow-none">About</Nav.Link>
+                            {/* <Nav.Link href="/about" className="me-2 shadow-none">About</Nav.Link> */}
                             <Nav.Link href="/services" className="me-2 shadow-none">Services</Nav.Link>
                             <Nav.Link href="/cart" className="nav-cart-container me-2 shadow-none" onClick={openModal}>
                                 <BsCart4 />

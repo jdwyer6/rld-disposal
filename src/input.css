@@ -445,6 +445,18 @@ nav {
 
 }
 
+.btn-acknowledge {
+    color: white;
+    background-color: var(--color-status-0);
+    border: var(--color-status-0);
+    width: 95%;
+
+    &:hover {
+        background-color: var(--color-status-2);
+        color: white;
+    }
+}
+
 .btn-container {
     display: flex;
     justify-content: space-around;
@@ -571,6 +583,27 @@ nav {
 
 .text-white {
     color: white;
+}
+
+.text-danger {
+    color: var(--color-status-0);
+}
+
+.text-success {
+    color: var(--color-status-2);
+}
+
+.message-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .modal-container {
@@ -1036,4 +1069,13 @@ button, a {
 
 .validation-list li {
     color: var(--del-color);
+}
+
+.unacknowledged-requests-notification {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: var(--color-status-0);
+    color: white;
+    padding: 4px 8px;
 }

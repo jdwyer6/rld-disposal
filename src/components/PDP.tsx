@@ -203,7 +203,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
                                 <button className="btn-secondary me-2">Add another service or appliance</button>
                             </Link>
                             <Link to="/cart" className="flex-1">
-                                <button className="ms-2">Finalize and submit</button>
+                                <button className="ms-2">Go to Checkout</button>
                             </Link>
                             
                         </div>

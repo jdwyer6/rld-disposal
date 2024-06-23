@@ -4,7 +4,7 @@ import ProgressBar from "../components/ProgressBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit} from '@fortawesome/free-solid-svg-icons';
 import { db } from '../config/firebase';
-import { getDoc, getDocs, collection, Timestamp, doc, updateDoc } from 'firebase/firestore';
+import { getDoc, getDocs, collection, Timestamp, doc, setDoc, updateDoc, query, where } from 'firebase/firestore';
 import DashboardNav from "../components/dashboardNav";
 import { getPrices } from "../services/adminPrefsService";
 
@@ -21,6 +21,7 @@ type Job = {
     confirmed_delivery_date?: string;
     notes?: string;
     price?: number;
+    requestSeen?: boolean;
 };
 
 const Dashboard_Home = () => {
@@ -40,6 +41,8 @@ const Dashboard_Home = () => {
     // This value is not associated with pricing info. This is only for admin editing of job info so that price can be manually adjusted.
     const [appliances, setAppliances] = useState<string[]>([]);
     const [haulAwayLocations, setHaulAwayLocations] = useState<string[]>([]);
+    const [refresh, setRefresh] = useState(false);
+    const [unacknowledgedRequests, setUnacknowledgedRequests] = useState(0);
 
     const getJobs = async () => {
         try {
@@ -106,6 +109,15 @@ const Dashboard_Home = () => {
         }
     }
 
+    useEffect(() => {
+        updateUnacknowledgedRequests();
+    }, [jobs]);
+
+    const updateUnacknowledgedRequests = () => {
+        const unacknowledgedCount = jobs.filter(job => job.requestSeen !== true).length;
+        setUnacknowledgedRequests(unacknowledgedCount);
+    }
+
     const toggleCard = (id: number) => {
         setExpandedCards({
             ...expandedCards,
@@ -117,7 +129,6 @@ const Dashboard_Home = () => {
         getJobs();
         getApplianceList();
         getHaulAwayLocations();
-        console.log("haulAwayLocations: ", haulAwayLocations)
     }, []);
 
     useEffect(() => {
@@ -224,14 +235,35 @@ const Dashboard_Home = () => {
     const toggleModal = (job: Job) => {
         setSelectedJob(job);
         setShowModal(true);
-        console.log("Show Modal: ", showModal);
-        console.log("Selected Job: ", selectedJob);
     };
 
     const handleModalClose = () => {
         setShowModal(false);
         setSelectedJob(null);
     };
+
+    const handleClickAcknowledgeRequest = async (job: Job) => {
+        job.requestSeen = true;
+        const jobDocRef = doc(db, "jobs", job.id);
+        
+        try {
+            const docSnap = await getDoc(jobDocRef);
+            if (docSnap.exists()) {
+                // Document exists, update it
+                await updateDoc(jobDocRef, { requestSeen: true });
+            } else {
+                // Document does not exist, add it
+                await setDoc(jobDocRef, job);
+            }
+            updateUnacknowledgedRequests();
+            setRefresh(!refresh);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+        }
+    };
+
+    useEffect(() => {
+    }, [refresh]);
 
     const handleInputChange = (
         e: React.ChangeEvent<
@@ -287,7 +319,10 @@ const Dashboard_Home = () => {
             </div>
 
             <div className="flex-6 relative">
-                <h2>Orders</h2>
+                <div>
+                    <h2>Orders</h2>
+                    <div className="unacknowledged-requests-notification">{unacknowledgedRequests} unacknowledged</div>
+                </div>
                 <input
                     className="mb-sm"
                     type="text"
@@ -339,6 +374,7 @@ const Dashboard_Home = () => {
                             >
                                 <FontAwesomeIcon icon={faEdit} />{" "}
                             </div>
+                            <div onClick={()=>handleClickAcknowledgeRequest(job)}>{job.requestSeen ?? false ? "" : (<button className="btn-acknowledge">ACKNOWLEDGE REQUEST!</button>)}</div>
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
                             <p><strong>Date Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
@@ -352,13 +388,7 @@ const Dashboard_Home = () => {
                             >
                                 Click to expand
                             </a>
-                            <div
-                                className={
-                                    expandedCards[job.id] === true
-                                        ? "show"
-                                        : "hide"
-                                }
-                            >
+                            <div className={expandedCards[job.id] === true ? "show" : "hide"}>
                                 <b>Services Requested:</b>
                                 <ul>
                                     {job.services.map(
@@ -425,16 +455,7 @@ const Dashboard_Home = () => {
                                     <strong>Order Status: </strong>
                                     {orderStatus[job.orderStatus]}
                                 </p>
-                                <a
-                                    onClick={() => toggleCard(job.id)}
-                                    className={
-                                        expandedCards[job.id] === false
-                                            ? "hide"
-                                            : "show"
-                                    }
-                                >
-                                    Click to Collapse
-                                </a>
+                                <a onClick={() => toggleCard(job.id)}className={expandedCards[job.id] === false? "hide": "show"}>Click to Collapse</a>
                             </div>
                         </div>
                     ))}
@@ -645,7 +666,7 @@ const Dashboard_Home = () => {
                                     ))}
                                 </select>
 
-                                <button type="button" onClick={handleSave}>
+                                <button type="button" className="my-sm" onClick={handleSave}>
                                     Save
                                 </button>
                             </form>
