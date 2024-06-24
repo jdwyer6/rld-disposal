@@ -10,9 +10,9 @@ type servicesProps = {
 const Services = ({numOfCartItems}: servicesProps) => {
 
     return ( 
-        <div className="container flex flex-col">
+        <div className="container flex flex-col services-page">
             <h1 className="text-center my-5">Services</h1>
-            <div className="flex justify-around flex-wrap">
+            <div className="flex justify-around flex-wrap services-container">
                 <Link to="/pdp-haulAway" className="mb-5 flex-1">
                     <Card title="Haul away an appliance" subtitle="Starting at $19" image={haulPhoto} btnText="Schedule"/>
                 </Link>

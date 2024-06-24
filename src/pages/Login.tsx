@@ -16,6 +16,7 @@ const Login: React.FC = () => {
         /********** IMPORTANT **********
         USER SIGN UP DISABLED ON FIREBASE
         To create a user enable sign up at firebase console --> authentication --> settings --> user actions --> enable sign up
+        If domain isn't authorized: authentication --> settings --> authorize domains
          *******************************/
         navigate('/admin');
       }

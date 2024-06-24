@@ -53,7 +53,6 @@ const Dashboard_Home = () => {
             }));
 
             setJobs(filteredData);
-            console.log(jobs);
         } catch (err) {
             console.error(err);
         }
@@ -160,11 +159,6 @@ const Dashboard_Home = () => {
                 sorted = sorted.sort((a, b) => {
                     const paymentA = a.payment_collected ? 1 : 0;
                     const paymentB = b.payment_collected ? 1 : 0;
-                    console.log(
-                        sortOption,
-                        a.payment_collected,
-                        b.payment_collected
-                    );
                     return paymentA - paymentB;
                 });
             } else if (sortOption === "paymentStatus:paid") {

@@ -47,9 +47,9 @@ const Home = () => {
     }
 
     return ( 
-        <div className="flex flex-col">
+        <div className="flex flex-col home-page">
             <div className="hero overlay flex align-center justify-center">
-                <div className="content w-50">
+                <div className="content hero-container">
                     <h1 className="text-white text-center hero-text">Don't know what to do with your appliances?</h1>
                     <h4 className="text-white text-center">Contact RLD Disposal today for quality appliance delivery, installation, removal, and more from technicians who care.</h4>
                     <div className="flex justify-center">
@@ -62,7 +62,7 @@ const Home = () => {
 
             <div className="text-center my-lg">
                 <h1>We address all your appliance annoyances.</h1>
-                <div className="flex justify-around">
+                <div className="flex justify-around wrap">
                     <div className="text-center">
                         <TbHomeOff className="icon-large" />
                         <p>Big box stores deliver but won't install?</p>
@@ -78,9 +78,9 @@ const Home = () => {
                 </div>
             </div>
 
-            <div>
-                <h2 className="text-center">Serving the greater St. Louis area since 1953.</h2>
-                <div className="flex justify-around">
+            <div className="p-mobile">
+                <h2 className="text-center mb-sm">Serving the greater St. Louis area since 1953.</h2>
+                <div className="flex justify-around card-container">
                     <Card
                         title="Schedule an appointment online"
                         subtitle="Fast, easy and convenient. Pick a time that's right for you and pay online or in-person."

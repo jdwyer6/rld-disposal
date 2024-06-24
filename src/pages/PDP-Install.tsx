@@ -5,7 +5,7 @@ import {TbHomeOff, TbTrash, TbTruckDelivery} from 'react-icons/tb';
 import Card from '../components/card';
 import {Link} from 'react-router-dom';
 import PDP from '../components/PDP';
-import installPhoto from '../images/install.jpg';
+import installPhoto from '../images/install.png';
 
 type pdpProps = {
     jobInfo: any,

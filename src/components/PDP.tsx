@@ -170,37 +170,14 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
     return ( 
         <div className="container">
             <div className='row mt-5'>
-                <div className="col">
+                <div className="col hide-on-md-and-down">
                     <img src={photo} alt="service-photo" width='800' height='800'/>
                 </div>
-                <div className="col ms-5">
+                <div className="col">
                     <h1>{title}</h1>
                         <h1>${currentServices.price}</h1>
                     <hr></hr>
                     <strong>Select an appliance</strong>
-                    {/* <div className='flex flex-wrap justify-center appliance-selection-container'>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "refrigerator" ? 'selected' : ''}`} onClick={() => selectAppliance("refrigerator")}>
-                            <span>Refrigerator</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "range" ? 'selected' : ''}`} onClick={()=>selectAppliance("range")}>
-                            <span>Range</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "washer" ? 'selected' : ''}`} onClick={()=>selectAppliance("washer")}>
-                            <span>Washer</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "dryer" ? 'selected' : ''}`} onClick={()=>selectAppliance("dryer")}>
-                            <span>Dryer</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "dishwasher" ? 'selected' : ''}`} onClick={()=>selectAppliance("dishwasher")}>
-                            <span>Dishwasher</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "cooktop" ? 'selected' : ''}`} onClick={()=>selectAppliance("cooktop")}>
-                            <span>Cooktop</span>
-                        </button>
-                        <button className={`btn-secondary my-1 ${currentServices.appliance === "microwave" ? 'selected' : ''}`} onClick={()=>selectAppliance("microwave")}>
-                            <span>Microwave</span>
-                        </button>
-                    </div> */}
                   <div className='flex flex-wrap justify-center appliance-selection-container'>
                         {dbPrices && Object.keys(dbPrices.install).map((appliance) => (
                             <button
@@ -237,14 +214,14 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             {showModal ? (
                 <div className="added-to-cart-modal">
                     <div className="added-to-cart-modal-content">
-                        <h1>Thanks for selecting a service</h1>
+                        <h1 className="text-center">Thanks for selecting a service</h1>
                         <p className="text-center">What would you like to do now?</p>
                         <div className="btn-container">
                             <Link to="/services" className="flex-1">
-                                <button className="btn-secondary me-2">Add another service or appliance</button>
+                                <button className="btn-secondary">Add another service or appliance</button>
                             </Link>
                             <Link to="/cart" className="flex-1">
-                                <button className="ms-2">Go to Checkout</button>
+                                <button>Go to Checkout</button>
                             </Link>
                             
                         </div>

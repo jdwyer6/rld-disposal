@@ -246,7 +246,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
     
 
     return ( 
-        <div className="container flex flex-col">
+        <div className="container flex flex-col cart-page">
             <h1 className="text-center my-lg">Cart</h1>
 
             {/* ---------------Cart Items--------------- */}
@@ -327,12 +327,12 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
                     <h3 className="text-center">Select a day.</h3>
                     <p className="text-center">Which day works best with your schedule?</p>
                     <div className="item-container justify-center">
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "monday" ? 'selected' : ''}`} onClick={()=>selectDay("monday")}>Monday</button></div>
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "tuesday" ? 'selected' : ''}`} onClick={()=>selectDay("tuesday")}>Tuesday</button></div>
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "wednesday" ? 'selected' : ''}`} onClick={()=>selectDay("wednesday")}>Wednesday</button></div>
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "thursday" ? 'selected' : ''}`} onClick={()=>selectDay("thursday")}>Thursday</button></div>
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "friday" ? 'selected' : ''}`} onClick={()=>selectDay("friday")}>Friday</button></div>
-                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "saturday" ? 'selected' : ''}`} onClick={()=>selectDay("saturday")}>Saturday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "monday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("monday")}>Monday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "tuesday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("tuesday")}>Tuesday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "wednesday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("wednesday")}>Wednesday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "thursday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("thursday")}>Thursday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "friday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("friday")}>Friday</button></div>
+                        <div><button className={`btn-secondary ${jobInfo.preferred_delivery_date.day === "saturday" ? 'selected' : ''} mb-sm`} onClick={()=>selectDay("saturday")}>Saturday</button></div>
                 
                     </div>
                 </div>  
