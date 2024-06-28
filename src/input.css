@@ -983,6 +983,32 @@ nav {
     margin-right: 2rem;
 }
 
+.dashboard-nav-container {
+    li {
+        list-style-type: none;
+        padding: .5rem .5rem;
+
+        &:hover {
+            background-color: var(--form-element-border-color);
+        }
+
+        &.active {
+            background-color: var(--primary);
+
+            a {
+                color: white;
+            }
+        }
+
+        a {
+            color: var(--h1-color);
+            text-decoration: none;
+        }
+
+    }
+   
+}
+
 .color-status-0 {
     color: var(--color-status-0);
     font-weight: bold;

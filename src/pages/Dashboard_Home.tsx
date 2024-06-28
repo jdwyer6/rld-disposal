@@ -187,24 +187,18 @@ const Dashboard_Home = () => {
                 });
             } else if (sortOption === "serviceStatus:accepted") {
                 sorted = sorted.sort((a, b) => {
-                    // Assuming 'delivered' orders have a specific orderStatus value
-                    // Adjust the logic to prioritize 'delivered' orders as needed
                     const isDeliveredA = a.orderStatus === 1 ? 1 : 0;
                     const isDeliveredB = b.orderStatus === 1 ? 1 : 0;
                     return isDeliveredB - isDeliveredA;
                 });
             } else if (sortOption === "serviceStatus:delivered") {
                 sorted = sorted.sort((a, b) => {
-                    // Assuming 'delivered' orders have a specific orderStatus value
-                    // Adjust the logic to prioritize 'delivered' orders as needed
                     const isDeliveredA = a.orderStatus === 2 ? 1 : 0;
                     const isDeliveredB = b.orderStatus === 2 ? 1 : 0;
                     return isDeliveredB - isDeliveredA;
                 });
             } else if (sortOption === "serviceStatus:complete") {
                 sorted = sorted.sort((a, b) => {
-                    // Assuming 'complete' orders have a specific orderStatus value
-                    // Adjust the logic to prioritize 'complete' orders as needed
                     const isCompleteA = a.orderStatus === 3 ? 1 : 0;
                     const isCompleteB = b.orderStatus === 3 ? 1 : 0;
                     return isCompleteB - isCompleteA;

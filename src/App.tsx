@@ -12,6 +12,7 @@ import Dashboard_Calendar from './pages/Dashboard_Calendar';
 import ThankYou from './pages/Thank-You';
 import ShutOff from './pages/Shut-Off';
 import Dashboard_Services from './pages/Dashboard_Services';
+import Dashboard_Create from './pages/Dashboard_Create';
 import Cart from './pages/Cart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
@@ -67,6 +68,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<ProtectedRoute><Dashboard_Home /></ProtectedRoute>} />
           <Route path="/admin/services" element={<ProtectedRoute><Dashboard_Services /></ProtectedRoute>} />
+          <Route path="/admin/create" element={<ProtectedRoute><Dashboard_Create /></ProtectedRoute>} />
         </Routes>
         {/* <Footer /> */}
       </BrowserRouter>
