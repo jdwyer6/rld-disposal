@@ -9,42 +9,42 @@ import { useEffect, useState } from 'react';
 
 
 const Home = () => {
-    const [isSiteOff, setIsSiteOff] = useState(false);
-    async function fetchEmergencyShutOff() {
-        // Ensure the environment variable is defined
-        const docId = process.env.REACT_APP_ADMIN_PREFS_DOC;
-        if (!docId) {
-          console.error("The document ID is not defined in environment variables.");
-          return;
-        }
+    // const [isSiteOff, setIsSiteOff] = useState(false);
+    // async function fetchEmergencyShutOff() {
+    //     // Ensure the environment variable is defined
+    //     const docId = process.env.REACT_APP_ADMIN_PREFS_DOC;
+    //     if (!docId) {
+    //       console.error("The document ID is not defined in environment variables.");
+    //       return;
+    //     }
       
-        const docRef = doc(db, "admin_prefs", docId); 
-        try {
-          const docSnap = await getDoc(docRef); 
+    //     const docRef = doc(db, "admin_prefs", docId); 
+    //     try {
+    //       const docSnap = await getDoc(docRef); 
       
-          if (docSnap.exists()) {
-            const data = docSnap.data(); 
-            const emergencyShutOff = data.emergency_shut_off; 
-            setIsSiteOff(emergencyShutOff);
-          } else {
-            console.log("No such document!"); 
-          }
-        } catch (error) {
-          console.error("Error fetching document:", error); 
-        }
-    }
+    //       if (docSnap.exists()) {
+    //         const data = docSnap.data(); 
+    //         const emergencyShutOff = data.emergency_shut_off; 
+    //         setIsSiteOff(emergencyShutOff);
+    //       } else {
+    //         console.log("No such document!"); 
+    //       }
+    //     } catch (error) {
+    //       console.error("Error fetching document:", error); 
+    //     }
+    // }
 
-    useEffect(() => {
-        fetchEmergencyShutOff();
-    }, []); 
+    // useEffect(() => {
+    //     fetchEmergencyShutOff();
+    // }, []); 
 
-    if (isSiteOff) {
-        return (
-            <div className="container flex justify-center">
-                <p className="text-center my-lg">Apologies for the inconvenience! Our services are receiving an unusually high volume of requests and we do not currently have availability. Please check back later.</p>
-            </div>
-        ); 
-    }
+    // if (isSiteOff) {
+    //     return (
+    //         <div className="container flex justify-center">
+    //             <p className="text-center my-lg">Apologies for the inconvenience! Our services are receiving an unusually high volume of requests and we do not currently have availability. Please check back later.</p>
+    //         </div>
+    //     ); 
+    // }
 
     return ( 
         <div className="flex flex-col home-page">

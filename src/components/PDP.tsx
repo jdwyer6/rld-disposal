@@ -8,6 +8,7 @@ import { getSessionService } from '../services/sessionService';
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from '../config/firebase';
 import { getPrices } from '../services/adminPrefsService';
+import SelectAppliance from './SelectAppliance';
 
 
 type pdpProps = {
@@ -43,9 +44,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             setDbPrices(pricesData as PricesType);
         };
         fetchPrices();
-        console.log(dbPrices)
     }, []);
-
 
     const locations = [
         {
@@ -61,23 +60,6 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
             description: "Inside the home - Appliance already uninstalled"
         }
     ];
-
-    // const prices = {
-    //     "haulAway": {
-    //         "curb": 50,
-    //         "inside" : 90,
-    //         "inside-uninstalled" : 65
-    //     },
-    //     "install": {
-    //         "refrigerator": 40,
-    //         "range": 60,
-    //         "washer": 50,
-    //         "dryer": 80,
-    //         "dishwasher": 10,
-    //         "cooktop": 20,
-    //         "microwave": 40
-    //     }
-    // }
 
     const prices = {
         "haulAway": dbPrices?.haulAway || {
@@ -142,7 +124,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
 
     useEffect(() => {
         setPrice();
-    }, [currentServices.service, currentServices.location, currentServices.appliance]);
+    }, [currentServices.service, currentServices.location, currentServices.appliance, dbPrices]);
     
     const addToCart = () => {
         // Retrieve the current services array from session storage and handle the case where it might be null

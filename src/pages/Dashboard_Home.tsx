@@ -22,6 +22,7 @@ type Job = {
     notes?: string;
     price?: number;
     requestSeen?: boolean;
+    address?: string;
 };
 
 const Dashboard_Home = () => {
@@ -365,6 +366,7 @@ const Dashboard_Home = () => {
                             <div onClick={()=>handleClickAcknowledgeRequest(job)}>{job.requestSeen ?? false ? "" : (<button className="btn-acknowledge">ACKNOWLEDGE REQUEST</button>)}</div>
                             <p><strong>Customer: </strong>{job.first_name} {job.last_name}</p>
                             <p><strong>Phone: </strong>{job.phone}</p>
+                            <p><strong>Address: </strong>{job.address ? job.address : "N/A"}</p>
                             <p><strong>Date Submitted: </strong>{job.createdAt ? job.createdAt.toDate().toLocaleString() : "N/A"}</p>
                             <a
                                 onClick={() => toggleCard(job.id)}
@@ -482,6 +484,13 @@ const Dashboard_Home = () => {
                                         value={selectedJob.phone || ""}
                                         onChange={handleInputChange}
                                     />
+
+                                    <label>Address:</label>
+                                    <textarea
+                                        name="address"
+                                        value={selectedJob.address || ""}
+                                        onChange={handleInputChange}/>
+
                                 </div>
 
                                 <div className="bg-light padding-sm">
