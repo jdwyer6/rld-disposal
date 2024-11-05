@@ -3,14 +3,10 @@ import { auth, googleProvider } from '../config/firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-interface LoginModalProps {
-  onClose: () => void;
-}
-
-const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
+const LoginModal = ({ onClose }) => {
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     signInWithGoogle();
     onClose();
@@ -21,17 +17,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ onClose }) => {
     try {
       await signInWithPopup(auth, googleProvider);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   const logout = async () => { 
     // try {
     //   await signOut(auth);
     // } catch (err) {
-    //   console.error(err)
+    //   console.error(err);
     // }
-  }
+  };
 
   return (
     <div className="modal">

@@ -1,14 +1,11 @@
 import { db } from "../config/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore"; // Assuming you're using Firebase v9+
 
-type PricesType = { [category: string]: { [key: string]: number } };
-
-
 /**
  * Fetches appliance prices from the Firestore database.
  * @returns A promise that resolves to an object containing appliance prices or an empty object if an error occurs or the document doesn't exist.
  */
-async function getPrices(): Promise<{ [key: string]: number } | null> {
+async function getPrices() {
     try {
         const docId = process.env.REACT_APP_ADMIN_PREFS_DOC || "defaultDocId";
         const docRef = doc(db, "admin_prefs", docId);
@@ -39,7 +36,7 @@ async function getPrices(): Promise<{ [key: string]: number } | null> {
  * Saves appliance prices to the Firestore database.
  * @param prices - The prices object to be saved.
  */
-async function savePrices(prices: PricesType): Promise<void> {
+async function savePrices(prices) {
     try {
         const docId = process.env.REACT_APP_ADMIN_PREFS_DOC || "defaultDocId";
         const docRef = doc(db, "admin_prefs", docId);

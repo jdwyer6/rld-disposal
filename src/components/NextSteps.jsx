@@ -1,31 +1,27 @@
-type nextStepsProps = {
-    jobInfo: any,
-    setJobInfo: Function
-}
-const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
-    const handleFirstNameChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+const Receipt = ({ jobInfo, setJobInfo }) => {
+    const handleFirstNameChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             first_name: event.target.value
         }));
     };
 
-    const handleLastNameChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleLastNameChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             last_name: event.target.value
         }));
     };
 
-    const handlePhoneChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handlePhoneChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             phone: event.target.value
         }));
     };
 
-    const handlePaymentCheckboxChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handlePaymentCheckboxChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             terms_of_service: {
                 ...prevState.terms_of_service,
@@ -34,8 +30,8 @@ const Receipt = ({ jobInfo, setJobInfo }: nextStepsProps) => {
         }));
     };
     
-    const handleServiceAreaCheckboxChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleServiceAreaCheckboxChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             terms_of_service: {
                 ...prevState.terms_of_service,

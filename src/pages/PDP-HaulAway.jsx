@@ -7,14 +7,7 @@ import {Link} from 'react-router-dom';
 import PDP from '../components/PDP';
 import haulPhoto from '../images/move.jpg';
 
-type pdpProps = {
-    jobInfo: any,
-    setJobInfo: any,
-    setNumOfCartItems: any
-}
-
-
-const PDPHaulAway = ({jobInfo, setJobInfo, setNumOfCartItems}: pdpProps) => {
+const PDPHaulAway = ({jobInfo, setJobInfo, setNumOfCartItems}) => {
 
     return ( 
         <div className="container">

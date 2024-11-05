@@ -3,22 +3,19 @@ import { getPrices, savePrices } from '../services/adminPrefsService';
 import { useEffect, useState } from 'react';
 import DashboardNav from '../components/dashboardNav';
 
-// Define a type for your prices state
-type PricesType = { [category: string]: { [key: string]: number } } | null;
-
 const Dashboard_Services = () => {
-    const [prices, setPrices] = useState<PricesType>(null);
+    const [prices, setPrices] = useState(null);
 
     useEffect(() => {
         const fetchPrices = async () => {
             const pricesData = await getPrices();
-            setPrices(pricesData as PricesType);
+            setPrices(pricesData);
         };
 
         fetchPrices();
     }, []);
 
-    const handleInputChange = (category: string, key: string, value: string) => {
+    const handleInputChange = (category, key, value) => {
         setPrices((prevPrices) => {
             if (prevPrices && prevPrices[category]) {
                 return {
@@ -53,7 +50,7 @@ const Dashboard_Services = () => {
         }
     };
 
-    function capFirst(string: string) {
+    function capFirst(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
 

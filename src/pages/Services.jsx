@@ -6,11 +6,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
-type servicesProps = {
-    numOfCartItems: number
-}
-
-const Services = ({numOfCartItems}: servicesProps) => {
+const Services = ({numOfCartItems}) => {
     const [isSiteOff, setIsSiteOff] = useState(false);
     async function fetchEmergencyShutOff() {
         // Ensure the environment variable is defined

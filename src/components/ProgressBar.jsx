@@ -1,10 +1,4 @@
-type PrivateProps = {
-    questionScreen: number;
-    setQuestionScreen: Function;
-}
-
-
-const ProgressBar = ({questionScreen, setQuestionScreen}:PrivateProps) => {
+const ProgressBar = ({questionScreen, setQuestionScreen}) => {
     return ( 
         <div className="flex w-1/2 justify-around items-center">
             <div className="flex flex-col items-center">

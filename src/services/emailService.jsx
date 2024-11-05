@@ -1,15 +1,7 @@
 import emailjs from '@emailjs/browser';
 import { useRef, MutableRefObject } from 'react';
 
-interface EmailProps {
-    templateId: string;
-    firstName: string;
-    email: string;
-    price: string;
-    jobInfo: any;
-}
-
-const SendConfirmationEmail = ({templateId, firstName, email, price, jobInfo}: EmailProps) => {
+const SendConfirmationEmail = ({templateId, firstName, email, price, jobInfo}) => {
     const serviceID = process.env.REACT_APP_EMAIL_SERVICE_ID || '';
     const publicKey = process.env.REACT_APP_EMAIL_PUBLIC_KEY || '';
 

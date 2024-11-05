@@ -6,40 +6,8 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
-type Service = {
-  location: string;
-  service: string;
-  price: number;
-  appliance: string;
-};
-
-type JobInfo = {
-  confirmed_delivery_date: string;
-  requestSeen: boolean;
-  services: Service[];
-  createdAt: any; // Use firebase.firestore.Timestamp if using Firebase v8
-  number_of_services: number;
-  notes: string;
-  first_name: string;
-  last_name: string;
-  phone: string;
-  payment_collected: boolean;
-  terms_of_service: {
-    payment: boolean;
-    service_area: boolean;
-  };
-  price: number;
-  preferred_delivery_date: {
-    time: string;
-    day: string;
-  };
-  orderStatus: number;
-  email: string;
-  id: string;
-};
-
 const Dashboard_Create = () => {
-  const [jobInfo, setJobInfo] = useState<JobInfo>({
+  const [jobInfo, setJobInfo] = useState({
     confirmed_delivery_date: "",
     requestSeen: false,
     services: [
@@ -71,10 +39,10 @@ const Dashboard_Create = () => {
     id: ""
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox') {
-      const { checked } = e.target as HTMLInputElement;
+      const { checked } = e.target;
       setJobInfo(prevState => ({
         ...prevState,
         [name]: checked
@@ -92,7 +60,7 @@ const Dashboard_Create = () => {
     }
   };
 
-  const handleServiceChange = (index: number, e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleServiceChange = (index, e) => {
     const { name, value } = e.target;
     const updatedServices = [...jobInfo.services];
     updatedServices[index] = {
@@ -112,7 +80,7 @@ const Dashboard_Create = () => {
     }));
   };
 
-  const removeService = (index: number) => {
+  const removeService = (index) => {
     const updatedServices = jobInfo.services.filter((_, i) => i !== index);
     setJobInfo(prevState => ({
       ...prevState,

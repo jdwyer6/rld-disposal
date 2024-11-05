@@ -1,17 +1,8 @@
 import { isVisible } from "@testing-library/user-event/dist/utils"
 import { motion, AnimatePresence } from "framer-motion"
 
-type PrivateProps = {
-    setServiceVerb: Function
-    setQuestionScreen: any
-    questionScreen: number
-    setCurrentJobInfo: Function
-    currentJobInfo: any
-    jobNumber: number
-}
-
-const SelectService = ({setQuestionScreen, questionScreen, setServiceVerb, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
-    const makeSelection = (verb: string, service: string) => {
+const SelectService = ({setQuestionScreen, questionScreen, setServiceVerb, setCurrentJobInfo, currentJobInfo, jobNumber}) => {
+    const makeSelection = (verb, service) => {
         let updatedJob = [...currentJobInfo.services];
         updatedJob[jobNumber] = service;
         setCurrentJobInfo({

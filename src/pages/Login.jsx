@@ -4,14 +4,14 @@ import { signInWithGoogle } from '../config/firebase';
 import { UserCredential } from 'firebase/auth';
 import MessageModal from '../components/MessageModal';
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleSignIn = async () => {
     try {
-      const result: UserCredential = await signInWithGoogle();
+      const result = await signInWithGoogle();
       if (result.user) {
         /********** IMPORTANT **********
         USER SIGN UP DISABLED ON FIREBASE
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
          *******************************/
         navigate('/admin');
       }
-    } catch (error: any) {
+    } catch (error) {
         setErrorMessage(error.message);
         setModalIsOpen(true);
       console.error('Error during sign in: ', error.message);

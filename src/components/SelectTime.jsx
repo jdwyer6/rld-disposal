@@ -1,19 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
-
-type PrivateProps = {
-    serviceVerb: string
-    setQuestionScreen: any
-    questionScreen: number
-    setCurrentJobInfo: Function
-    currentJobInfo: any
-    jobNumber: number
-}
-
-const SelectTime = ({setQuestionScreen, questionScreen, serviceVerb, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
+const SelectTime = ({setQuestionScreen, questionScreen, serviceVerb, setCurrentJobInfo, currentJobInfo, jobNumber}) => {
     const [timeAndDay, setTimeAndDay] = useState();
-    const makeSelection = (verb: string) =>{
+    const makeSelection = (verb) =>{
         setQuestionScreen(questionScreen+=1)
     }
     return ( 

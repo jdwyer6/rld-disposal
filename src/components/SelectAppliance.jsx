@@ -1,17 +1,8 @@
 import { MotionConfig } from "framer-motion";
 import { motion, AnimatePresence } from "framer-motion";
 
-type PrivateProps = {
-    serviceVerb: string;
-    setQuestionScreen: any
-    questionScreen: number
-    setCurrentJobInfo: Function
-    currentJobInfo: any
-    jobNumber: number
-}
-
-const SelectAppliance = ({serviceVerb, setQuestionScreen, questionScreen, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
-    const makeSelection = (appliance: string) =>{
+const SelectAppliance = ({serviceVerb, setQuestionScreen, questionScreen, setCurrentJobInfo, currentJobInfo, jobNumber}) => {
+    const makeSelection = (appliance) =>{
         let updatedJob = [...currentJobInfo.appliances];
         updatedJob[jobNumber] = appliance;
         setCurrentJobInfo({

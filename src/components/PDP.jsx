@@ -3,31 +3,14 @@ import {Link} from 'react-router-dom';
 import LoginModal from './login_Modal';
 import React, { useEffect, useState } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { start } from 'repl';
 import { getSessionService } from '../services/sessionService';
 import { doc, getDoc, DocumentData } from "firebase/firestore";
 import { db } from '../config/firebase';
 import { getPrices } from '../services/adminPrefsService';
 import SelectAppliance from './SelectAppliance';
 
-
-type pdpProps = {
-    title: string,
-    photo: string,
-    startingPrice: number,
-    jobInfo: any,
-    setJobInfo: any,
-    service: string,
-    showApplianceLocationDropdown: boolean,
-    startingAppliance: string,
-    startingLocation: string,
-    setNumOfCartItems?: any
-}
-
-type PricesType = { [category: string]: { [key: string]: number } } | null;
-
-const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation, setNumOfCartItems}: pdpProps) => {
-    const [dbPrices, setDbPrices] = useState<{ [category: string]: { [key: string]: number } } | null>(null);
+const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApplianceLocationDropdown, startingAppliance, startingLocation, setNumOfCartItems}) => {
+    const [dbPrices, setDbPrices] = useState(null);
 
     const [currentServices, setCurrentServices] = useState({
             service: service,
@@ -41,7 +24,7 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
     useEffect(() => {
         const fetchPrices = async () => {
             const pricesData = await getPrices();
-            setDbPrices(pricesData as PricesType);
+            setDbPrices(pricesData);
         };
         fetchPrices();
     }, []);
@@ -80,16 +63,16 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
     }
 
     const setPrice = () => {
-        const service = currentServices.service as keyof typeof prices;
-        const location = currentServices.location as keyof typeof prices[typeof service];
-        const appliance = currentServices.appliance as keyof typeof prices[typeof service];
+        const service = currentServices.service;
+        const location = currentServices.location;
+        const appliance = currentServices.appliance;
         if (service === "haulAway") {
-            setCurrentServices((prevState: typeof currentServices) => ({
+            setCurrentServices((prevState) => ({
                 ...prevState,
                 price: prices[service][location]
             }));
         } else {
-            setCurrentServices((prevState: typeof currentServices) => ({
+            setCurrentServices((prevState) => ({
                 ...prevState,
                 price: prices[service][appliance]
                 
@@ -97,26 +80,26 @@ const PDP = ({title, photo, startingPrice, jobInfo, setJobInfo, service, showApp
         }
     }
 
-    const selectAppliance = (appliance: string) => {
-        setCurrentServices((prevState: typeof currentServices) => ({
+    const selectAppliance = (appliance) => {
+        setCurrentServices((prevState) => ({
             ...prevState,
             appliance: appliance
         }));
     }
 
-    const selectLocation = (location: string) => {
-        setCurrentServices((prevState: typeof currentServices) => ({
+    const selectLocation = (location) => {
+        setCurrentServices((prevState) => ({
             ...prevState,
             location: location
         }));
     }
     
     useEffect(() => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+        setJobInfo((prevState) => ({
             ...prevState,
             price: startingPrice
         }))
-        setCurrentServices((prevState: typeof currentServices) => ({
+        setCurrentServices((prevState) => ({
             ...prevState,
             service: service
         }));

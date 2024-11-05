@@ -3,24 +3,14 @@ import { getPositionOfLineAndCharacter } from "typescript";
 import { motion, AnimatePresence } from "framer-motion";
 // import prices from '../data/prices';
 
-
-type PrivateProps = {
-    serviceVerb: string;
-    setQuestionScreen: any
-    questionScreen: number
-    setCurrentJobInfo: Function
-    currentJobInfo: any
-    jobNumber: number
-}
-
-const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen, setCurrentJobInfo, currentJobInfo, jobNumber}: PrivateProps) => {
+const SelectLocation = ({serviceVerb, setQuestionScreen, questionScreen, setCurrentJobInfo, currentJobInfo, jobNumber}) => {
     const makeSelection = () =>{
         setQuestionScreen(questionScreen+=1)
     }
     const [dropDownOpen, setDropDownOpen] = useState(false);
     const [location, setLocation] = useState("Choose a location");
     const [other, setOther] = useState(false);
-    const selectOption = (loc:string, oth:boolean) =>{
+    const selectOption = (loc, oth) =>{
         setLocation(loc)
         setOther(oth)
         setDropDownOpen(false);

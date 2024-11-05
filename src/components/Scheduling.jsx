@@ -2,15 +2,10 @@ import { faMugSaucer, faSun } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Tooltip } from 'react-tooltip'
 
-type schedulingProps = {
-    jobInfo: any,
-    setJobInfo: Function
-}
+const Scheduling = ({ jobInfo, setJobInfo }) => {
 
-const Scheduling = ({ jobInfo, setJobInfo }: schedulingProps) => {
-
-    const selectTime = (time: string) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const selectTime = (time) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             preferred_delivery_date: {
                 ...prevState.preferred_delivery_date,
@@ -19,8 +14,8 @@ const Scheduling = ({ jobInfo, setJobInfo }: schedulingProps) => {
         }));
     }
 
-    const selectDay = (day: string) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const selectDay = (day) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             preferred_delivery_date: {
                 ...prevState.preferred_delivery_date,

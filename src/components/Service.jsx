@@ -6,16 +6,7 @@ import { useState } from 'react';
 import { MotionConfig, AnimatePresence, motion } from "framer-motion";
 import { Tooltip } from 'react-tooltip'
 
-
-
-
-type serviceProps = {
-    jobInfo: any,
-    setJobInfo: Function
-    index: number
-}
-
-const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
+const Service = ({ jobInfo, setJobInfo, index }) => {
     const appliances = ["Refrigerator", "Range", "Stove", "Oven", "Microwave", "Dishwasher", "Washer", "Dryer", "Wine Cooler", "Ice Maker", "Freezer", "Trash Compactor", "Garbage Disposal", "Vent Hood"]
     const locations = [
         {
@@ -36,11 +27,11 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
     const isServiceRemove = currentService.service === "remove";
     const [buttonHideClass, setButtonHideClass] = useState("show");
 
-    const selectService = (value: string) => {
+    const selectService = (value) => {
         let updatedServices = [...jobInfo.services];
         updatedServices[index].service = value;
     
-        setJobInfo((prevState: typeof jobInfo) => ({
+        setJobInfo((prevState) => ({
             ...prevState,
             services: updatedServices
         }));
@@ -52,28 +43,28 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
         }
     }
 
-    const selectAppliance = (appliance: string) => {
+    const selectAppliance = (appliance) => {
         let updatedServices = [...jobInfo.services];
         updatedServices[index].appliance = appliance;
     
-        setJobInfo((prevState: typeof jobInfo) => ({
+        setJobInfo((prevState) => ({
             ...prevState,
             services: updatedServices
         }));
     }
 
-    const selectLocation = (location: string) => {
+    const selectLocation = (location) => {
         let updatedServices = [...jobInfo.services];
         updatedServices[index].location = location;
     
-        setJobInfo((prevState: typeof jobInfo) => ({
+        setJobInfo((prevState) => ({
             ...prevState,
             services: updatedServices
         }));
     }
 
     const addAnotherService = () => {
-        setJobInfo((prevState: typeof jobInfo) => {
+        setJobInfo((prevState) => {
             const newNumberOfServices = prevState.number_of_services + 1;
             
             // Create a new service object
@@ -94,7 +85,7 @@ const Service = ({ jobInfo, setJobInfo, index }: serviceProps) => {
     }
 
     const removeService = () => {
-        setJobInfo((prevState: typeof jobInfo) => {
+        setJobInfo((prevState) => {
             const newNumberOfServices = prevState.number_of_services - 1;
             const updatedServices = [...prevState.services];
             updatedServices.splice(index, 1);

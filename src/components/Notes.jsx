@@ -1,11 +1,6 @@
-type notesProps = {
-    jobInfo: any,
-    setJobInfo: Function
-}
-
-const Notes = ({ jobInfo, setJobInfo }: notesProps) => {
-    const handleNotesChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo)  => ({
+const Notes = (jobInfo, setJobInfo) => {
+    const handleNotesChange = (event) => {
+        setJobInfo((prevState)  => ({
             ...prevState,
             notes: event.target.value
         }));

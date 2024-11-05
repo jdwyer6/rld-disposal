@@ -7,13 +7,7 @@ import {Link} from 'react-router-dom';
 import PDP from '../components/PDP';
 import installPhoto from '../images/install.png';
 
-type pdpProps = {
-    jobInfo: any,
-    setJobInfo: any,
-    setNumOfCartItems: any
-}
-
-const PDPInstall = ({jobInfo, setJobInfo, setNumOfCartItems}: pdpProps) => {
+const PDPInstall = ({jobInfo, setJobInfo, setNumOfCartItems}) => {
 
     return ( 
         <div className="container">

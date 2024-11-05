@@ -23,7 +23,7 @@ const Schedule = () => {
     const [modalIsOpen, setModalIsOpen] = useState(true);
     const [ modalMessage, setModalMessage ] = useState("test message");
 
-    const openModal = (message:string) => {
+    const openModal = (message) => {
         setModalMessage(message);
         setModalIsOpen(true);
     }
@@ -108,7 +108,7 @@ const Schedule = () => {
     };
 
     const validateData = () => {
-        const keys = Object.keys(jobInfo) as Array<keyof typeof jobInfo>;
+        const keys = Object.keys(jobInfo);
     
         for (const key of keys) {
             if (key === 'notes' || key === 'confirmed_delivery_date') {
@@ -136,7 +136,7 @@ const Schedule = () => {
             const value = jobInfo[key];
     
             if (typeof value === 'object' && value !== null && !(value instanceof Array)) {
-                const subKeys = Object.keys(value) as Array<keyof typeof value>;
+                const subKeys = Object.keys(value);
                 for (const subKey of subKeys) {
                     if (value[subKey] === '' || value[subKey] === null) {
                         alert(`Please fill out all fields. Value missing for ${subKey}`);

@@ -1,23 +1,18 @@
 import prices from "../data/prices";
 
-type receiptProps = {
-    jobInfo: any,
-    setJobInfo: Function
-}
-
-const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
-    const MOSalesTaxRate = .4225;
+const Receipt = ({ jobInfo, setJobInfo }) => {
+    const MOSalesTaxRate = 0.4225;
 
     const calculateSubtotal = () => {
         let subtotal = 0;
-        jobInfo.services.forEach((serviceItem: { service: keyof typeof prices; appliance?: string; location?: string; }) => {
+        jobInfo.services.forEach((serviceItem) => {
             const serviceType = serviceItem.service; // 'remove' or 'install'
     
             let servicePrice = 0;
             if (serviceType === 'install' && serviceItem.appliance) {
-                servicePrice = prices.install[serviceItem.appliance as keyof typeof prices.install];
+                servicePrice = prices.install[serviceItem.appliance];
             } else if (serviceType === 'remove' && serviceItem.location) {
-                servicePrice = prices.remove[serviceItem.location as keyof typeof prices.remove];
+                servicePrice = prices.remove[serviceItem.location];
             }
     
             subtotal += servicePrice;
@@ -25,7 +20,7 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
         return subtotal;
     };
 
-    const calculeateTaxes = () => {
+    const calculateTaxes = () => {
         const subtotal = calculateSubtotal();
         const taxes = subtotal * MOSalesTaxRate;
         return taxes;
@@ -37,7 +32,7 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
                 <h3>Receipt</h3>
                 <b>Services ordered: </b>
                 <ul>
-                    {jobInfo.services.map((serviceItem: any, index: number) => (
+                    {jobInfo.services.map((serviceItem, index) => (
                         <li key={index}>
                             {serviceItem.service.charAt(0).toUpperCase() + serviceItem.service.slice(1)} {serviceItem.appliance}
                             {serviceItem.location && ` from ${serviceItem.location}`}
@@ -52,10 +47,10 @@ const Receipt = ({ jobInfo, setJobInfo }: receiptProps) => {
                     <span><b>Subtotal:</b> ${calculateSubtotal()}</span>
                 </div>
                 <div>
-                    <span><b>Taxes:</b> ${calculeateTaxes()}</span>
+                    <span><b>Taxes:</b> ${calculateTaxes()}</span>
                 </div>
                 <div>
-                    <span><b>Estimated Total:</b> ${Math.round((calculateSubtotal() + calculeateTaxes()) * 100) / 100}</span>
+                    <span><b>Estimated Total:</b> ${Math.round((calculateSubtotal() + calculateTaxes()) * 100) / 100}</span>
                 </div>
             </section>
         </div>

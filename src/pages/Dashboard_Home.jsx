@@ -8,40 +8,21 @@ import { getDoc, getDocs, collection, Timestamp, doc, setDoc, updateDoc, query, 
 import DashboardNav from "../components/dashboardNav";
 import { getPrices } from "../services/adminPrefsService";
 
-type Job = {
-    id: string;
-    first_name?: string;
-    last_name?: string;
-    phone?: string;
-    createdAt?: Timestamp;
-    orderStatus?: number;
-    payment_collected?: boolean; 
-    services?: Array<{ service: string, appliance: string, location: string }>;
-    preferred_delivery_date?: { day: string, time: string };
-    confirmed_delivery_date?: string;
-    notes?: string;
-    price?: number;
-    requestSeen?: boolean;
-    address?: string;
-};
-
 const Dashboard_Home = () => {
     const jobsCollectionRef = collection(db, "jobs");
-    const [jobs, setJobs] = useState<Job[]>([]);
-    const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+    const [jobs, setJobs] = useState([]);
+    const [filteredJobs, setFilteredJobs] = useState([]);
     const [sortOption, setSortOption] = useState("date");
     const [sortedJobs, setSortedJobs] = useState(filteredJobs);
     const orderStatus = ["Pending", "Accepted", "Delivered", "Complete"];
     const [showFullCard, setShowFullCard] = useState(false);
-    const [expandedCards, setExpandedCards] = useState<{
-        [key: number]: boolean;
-    }>({});
+    const [expandedCards, setExpandedCards] = useState({});
     const [searchInput, setSearchInput] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+    const [selectedJob, setSelectedJob] = useState(null);
     // This value is not associated with pricing info. This is only for admin editing of job info so that price can be manually adjusted.
-    const [appliances, setAppliances] = useState<string[]>([]);
-    const [haulAwayLocations, setHaulAwayLocations] = useState<string[]>([]);
+    const [appliances, setAppliances] = useState([]);
+    const [haulAwayLocations, setHaulAwayLocations] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const [unacknowledgedRequests, setUnacknowledgedRequests] = useState(0);
 
@@ -118,7 +99,7 @@ const Dashboard_Home = () => {
         setUnacknowledgedRequests(unacknowledgedCount);
     }
 
-    const toggleCard = (id: number) => {
+    const toggleCard = (id) => {
         setExpandedCards({
             ...expandedCards,
             [id]: !expandedCards[id],
@@ -211,17 +192,17 @@ const Dashboard_Home = () => {
         sortJobs();
     }, [sortOption]);
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (e) => {
         setSearchInput(e.target.value);
     };
 
-    const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSortChange = (e) => {
         const { value } = e.target;
         console.log("Sort Option Changed: ", value);
         setSortOption(value);
     };
 
-    const toggleModal = (job: Job) => {
+    const toggleModal = (job) => {
         setSelectedJob(job);
         setShowModal(true);
     };
@@ -231,7 +212,7 @@ const Dashboard_Home = () => {
         setSelectedJob(null);
     };
 
-    const handleClickAcknowledgeRequest = async (job: Job) => {
+    const handleClickAcknowledgeRequest = async (job) => {
         job.requestSeen = true;
         const jobDocRef = doc(db, "jobs", job.id);
         
@@ -254,23 +235,19 @@ const Dashboard_Home = () => {
     useEffect(() => {
     }, [refresh]);
 
-    const handleInputChange = (
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-        >
-    ) => {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
 
         setSelectedJob((prevJob) => {
             if (!prevJob) return prevJob;
 
-            let updatedValue: any = value;
+            let updatedValue = value;
             if (name === "payment_collected") {
                 updatedValue = value === "true";
             }
 
             if (name.startsWith("services")) {
-                const [, index, field] = name.match(/services\[(\d+)\]\.(.*)/)!;
+                const [, index, field] = name.match(/services\[(\d+)\]\.(.*)/) || [];
                 const updatedServices = prevJob.services
                     ? [...prevJob.services]
                     : [];
@@ -352,7 +329,7 @@ const Dashboard_Home = () => {
                 </div>
 
                 <div>
-                    {filteredJobs.map((job: any, index) => (
+                    {filteredJobs.map((job, index) => (
                         <div
                             key={index}
                             className={`order-card border-status-${job.orderStatus}`}
@@ -383,8 +360,8 @@ const Dashboard_Home = () => {
                                 <ul>
                                     {job.services.map(
                                         (
-                                            service: any,
-                                            serviceIndex: number
+                                            service,
+                                            serviceIndex
                                         ) => (
                                             <li key={serviceIndex}>
                                                 <span>

@@ -1,11 +1,4 @@
-type CardProps = {
-    title: string
-    subtitle: string
-    image: string
-    btnText: string
-}
-
-const Card = (props: CardProps) => {
+const Card = (props) => {
     return ( 
         <div className='card'>
             <h3>{props.title}</h3>

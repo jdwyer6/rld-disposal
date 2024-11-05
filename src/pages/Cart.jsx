@@ -12,16 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { SendConfirmationEmail } from '../services/emailService';
 
 
-type cartProps = {
-    setNumOfCartItems: any
-}
-
-interface Service {
-    price: number;
-}
-
-
-const Cart  = ({setNumOfCartItems}: cartProps) => {
+const Cart  = ({setNumOfCartItems}) => {
     const servicesData = sessionStorage.getItem('services');
     const [services, setServices] = useState(JSON.parse(servicesData ? servicesData : '[]'));
     const navigate = useNavigate();
@@ -51,7 +42,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
     });
     const jobsCollectionRef = collection(db, "jobs");
 
-    const getServiceTitle = (service: string) => {
+    const getServiceTitle = (service) => {
         switch(service) {
             case 'install':
                 return 'Install';
@@ -64,12 +55,12 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
 
 
 
-    const capitalizeFirstLetter = (string: string) => {
+    const capitalizeFirstLetter = (string) => {
         if (!string) return '';
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-    const getImage = (service: string) => {
+    const getImage = (service) => {
         switch(service) {
             case 'install':
                 return  <FaWrench />
@@ -80,8 +71,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }
     }
 
-    const removeItem = (idx: number) => {
-        const updatedCartItems = jobInfo.services.filter((item: any, index: number) => index !== idx);
+    const removeItem = (idx) => {
+        const updatedCartItems = jobInfo.services.filter((item, index) => index !== idx);
         const updatedJobInfo = { ...jobInfo, services: updatedCartItems };
         sessionStorage.setItem('services', JSON.stringify(updatedJobInfo.services));
         setJobInfo(updatedJobInfo);
@@ -94,43 +85,43 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         setPrice(calculatePrice(updatedCartItems));
     };
 
-    const handleFirstNameChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleFirstNameChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             first_name: event.target.value
         }));
     };
 
-    const handleLastNameChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleLastNameChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             last_name: event.target.value
         }));
     };
 
-    const handlePhoneChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handlePhoneChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             phone: event.target.value
         }));
     };
 
-    const handleEmailChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleEmailChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             email: event.target.value
         }));
     };
 
-    const handleNotesChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo)  => ({
+    const handleNotesChange = (event) => {
+        setJobInfo((prevState)  => ({
             ...prevState,
             notes: event.target.value
         }));
     }
 
-    const selectTime = (time: string) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const selectTime = (time) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             preferred_delivery_date: {
                 ...prevState.preferred_delivery_date,
@@ -140,8 +131,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         console.log(jobInfo);
     }
 
-    const selectDay = (day: string) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const selectDay = (day) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             preferred_delivery_date: {
                 ...prevState.preferred_delivery_date,
@@ -152,8 +143,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
     }
 
     {/* ---------------Terms and Conditions--------------- */}
-    const handlePaymentCheckboxChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handlePaymentCheckboxChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             terms_of_service: {
                 ...prevState.terms_of_service,
@@ -162,8 +153,8 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }));
     };
     
-    const handleServiceAreaCheckboxChange = (event: any) => {
-        setJobInfo((prevState: typeof jobInfo) => ({
+    const handleServiceAreaCheckboxChange = (event) => {
+        setJobInfo((prevState) => ({
             ...prevState,
             terms_of_service: {
                 ...prevState.terms_of_service,
@@ -172,7 +163,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }));
     };
     
-    function validateJobInfo(jobInfo: any) {
+    function validateJobInfo(jobInfo) {
         const issues = [];
 
         jobInfo.first_name = sanitizeInput(jobInfo.first_name);
@@ -201,7 +192,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         return issues;
     }
 
-    function sanitizeInput(input:any) {
+    function sanitizeInput(input) {
         return DOMPurify.sanitize(input);
     }
 
@@ -231,7 +222,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
         }
     };
 
-    const calculatePrice = (services: Service[]) => {
+    const calculatePrice = (services) => {
         const totalPrice = services.reduce((acc, currentService) => {
             return acc + currentService.price;
         }, 0);
@@ -252,7 +243,7 @@ const Cart  = ({setNumOfCartItems}: cartProps) => {
             {/* ---------------Cart Items--------------- */}
             <div className="mb-lg">
                 <h3>Your Services</h3>
-                {jobInfo.services.map((service: any, index: number) => {
+                {jobInfo.services.map((service, index) => {
                     return (
                         <div className="flex justify-between cart-item">
                             <div className="flex align-center">

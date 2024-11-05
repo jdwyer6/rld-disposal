@@ -6,13 +6,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import { BsCart4 } from "react-icons/bs";
 import { getSessionService } from '../services/sessionService';
 
-type cartProps = {
-    numOfCartItems: number,
-    setNumOfCartItems: any
-}
-
-
-const Navigation = ({numOfCartItems, setNumOfCartItems}: cartProps) => {
+const Navigation = ({numOfCartItems, setNumOfCartItems}) => {
     const [expanded, setExpanded] = useState(false);
 
     useEffect(() => {
