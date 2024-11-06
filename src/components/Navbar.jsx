@@ -1,4 +1,4 @@
-import logo from '../images/logo-white.png';
+import logo from '../images/logo-2.png';
 import {Link} from 'react-router-dom';
 import LoginModal from './login_Modal';
 import React, { useState, useEffect } from 'react';
@@ -27,28 +27,29 @@ const Navigation = ({numOfCartItems, setNumOfCartItems}) => {
     }, [expanded]);
 
     return ( 
-        <>
-            <Navbar expanded={expanded} onToggle={setExpanded} expand="lg" variant="dark">
-                <div className="container flex nav-container">
-                    <Navbar.Brand href="/" className="me-5 d-flex align-center">
-                        <img src={logo} width='36' className='mr-3'/>
-                        <h5 className="ms-2 mb-0">RLD Disposal</h5>
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleToggle}/>
-                    <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="/" className="me-2 shadow-none" onClick={closeNav}>Home</Nav.Link>
-                            <Nav.Link href="/services" className="me-2 shadow-none" onClick={closeNav}>Services</Nav.Link>
-                            <Nav.Link href="/cart" className="nav-cart-container me-2 shadow-none" onClick={closeNav}>
-                                <BsCart4 />
-                                <div className="cart-num">{numOfCartItems > 0 ? numOfCartItems : ''}</div>
-                            </Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
-                </div>
+        <Navbar expanded={expanded} onToggle={setExpanded} className="bg-white shadow absolute z-20">
+            <div className="flex px-8 w-full justify-between max-w-[1400px]">
+                <Navbar.Brand href="/" className="flex align-center min-h-16 gap-2">
+                    <img src={logo} width="36" className=" md:block" alt="RLD Disposal" />
 
-            </Navbar>
-        </>
+                    <h5 className="flex items-center mb-0 text-2xl text-text-primary">RLD Disposal</h5>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={handleToggle} />
+                <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                    <Nav className="ml-auto flex gap-4">
+                        <Nav.Link href="/" onClick={closeNav}>Home</Nav.Link>
+                        <Nav.Link href="/services" onClick={closeNav}>Services</Nav.Link>
+                        <Nav.Link href="/cart" className="text-text-primary relative" onClick={closeNav}>
+                            <BsCart4 size={24}/>
+                            <div className="absolute top-0 right-0 -translate-y-2 translate-x-2 bg-brand-primary text-white px-2 rounded">{numOfCartItems > 0 ? numOfCartItems : ''}</div>
+                        </Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </div>
+        </Navbar>
+        
+
+        
 
 
     );

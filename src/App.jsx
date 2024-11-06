@@ -51,7 +51,7 @@ function App() {
   const [ numOfCartItems, setNumOfCartItems ] = useState(0);
 
   return (
-    <div className="App">
+    <div className="App relative">
       <BrowserRouter>
         <Navigation  numOfCartItems={numOfCartItems} setNumOfCartItems={setNumOfCartItems} />
         <Routes>
